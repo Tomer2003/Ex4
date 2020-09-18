@@ -2,14 +2,12 @@
 
 namespace client_operations{
 
-    void ClientHandleTester::handleClient(std::istream inputStream, std::ostream outputSream){
-      /*  inputStream.seekg(0, std::ios::end);
-        auto sizeOfMessage = inputStream.tellg();
-        inputStream.seekg(0, std::ios::beg);*/
-       /* std::string message;
-        inputStream >> message;
-        message += "succed!\n";
-        outputSream << message;*/
+  
+
+    void ClientHandleTester::handleClient(const int clientFielDescriptor, const int serverFielDescriptor) const{
+      std::string b(1024, '\0');
+      read(clientFielDescriptor, (void*)(b.data()), 1024);
+      std::cout << b;
     }
 
 

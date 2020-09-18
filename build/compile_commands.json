@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
+  "command": "/bin/c++    -g   -o CMakeFiles/tester.dir/main.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/main.cpp\"",
+  "file": "/home/tomer/Advanced Programmin 1/Ex4/main.cpp"
+},
+{
+  "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
+  "command": "/bin/c++    -g   -o CMakeFiles/tester.dir/server.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/server.cpp\"",
+  "file": "/home/tomer/Advanced Programmin 1/Ex4/server.cpp"
+},
+{
+  "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
+  "command": "/bin/c++    -g   -o CMakeFiles/tester.dir/client_operations.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/client_operations.cpp\"",
+  "file": "/home/tomer/Advanced Programmin 1/Ex4/client_operations.cpp"
+}
+]

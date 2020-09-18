@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/tomer/Advanced Programmin 1/Ex4/client_operations.hpp
+iostream
+-
+unistd.h
+-
+
+/home/tomer/Advanced Programmin 1/Ex4/server.cpp
+server.hpp
+/home/tomer/Advanced Programmin 1/Ex4/server.hpp
+
+/home/tomer/Advanced Programmin 1/Ex4/server.hpp
+client_operations.hpp
+/home/tomer/Advanced Programmin 1/Ex4/client_operations.hpp
+sys/socket.h
+-
+thread
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+unistd.h
+-
+vector
+-
+mutex
+-
+

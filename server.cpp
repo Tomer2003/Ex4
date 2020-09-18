@@ -4,9 +4,7 @@ std::mutex clients_vector_mutex;
 
 namespace server_side{
 
-    Server::Server(const unsigned int port, const client_operations::ClientHandler &clientHandler) : m_port(port), m_clientHandler(clientHandler), m_fileDescriptor(0){
-        
-    }
+    Server::Server(const unsigned int port, const client_operations::ClientHandler &clientHandler) noexcept : m_port(port), m_clientHandler(clientHandler), m_fileDescriptor(0) {    }
 
     void Server::errorCheck(const int returnValue) const {
         if(returnValue < 0){
@@ -46,18 +44,20 @@ namespace server_side{
        return address;
     }
 
-    ParallelServer::ParallelServer(const unsigned int port, const client_operations::ClientHandler &clientHandler) : Server(port, clientHandler) {
+    ParallelServer::ParallelServer(const unsigned int port, const client_operations::ClientHandler &clientHandler) noexcept : Server(port, clientHandler) {
         for(int i = 0; i < THREAD_POOL_SIZE; ++i){
-            std::thread thread(handleClientConnection);
-            m_threadPoolVector.push_back(thread);
+            std::thread thread(&ParallelServer::handleClientConnection, this);
+            m_threadPoolVector.push_back(std::move(thread));
         }
     }
 
     void ParallelServer::acceptClients(sockaddr_in address){
         auto addressLen = sizeof(address);
+        std::cout << "waits for accepts: " << std::endl;
         while(true){
             int socketNum;
             errorCheck(socketNum = accept(getFileDescriptor(), reinterpret_cast<sockaddr*>(&address), (socklen_t*)&addressLen));
+            std::cout << "accept!" << std::endl;
             clients_vector_mutex.lock();
             m_clients.push_back(socketNum);
             clients_vector_mutex.unlock();
@@ -67,6 +67,7 @@ namespace server_side{
 
     void ParallelServer::handleClientConnection(){
         int client;
+        std::cout << "waits fo handle connections:" << std::endl;
         while(true){
             clients_vector_mutex.lock();
             if(!m_clients.empty()){
@@ -75,11 +76,18 @@ namespace server_side{
                 clients_vector_mutex.unlock();
                 getClientHandler().handleClient(client, getFileDescriptor());
             }
+            else{
+                clients_vector_mutex.unlock();
+            }
         }
     }
 
     void ParallelServer::open(){
         sockaddr_in address = createFileDescriptor();
         acceptClients(address);
+    }
+
+    void ParallelServer::stop() const{
+
     }
 }

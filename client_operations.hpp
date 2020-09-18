@@ -1,15 +1,19 @@
 #include <iostream>
-
+#include <unistd.h>
 namespace client_operations{
     class ClientHandler{
     public:
-        virtual void handleClient(const std::istream inputStream, const std::ostream outputSream) const = 0;
+       
+
+        virtual void handleClient(const int clientFielDescriptor, const int serverFielDescriptor) const = 0;
 
     };
 
     class ClientHandleTester : public ClientHandler{
     public:
-        virtual void handleClient(const std::istream inputStream, const std::ostream outputSream) const;   
+        
+
+        void handleClient(const int clientFielDescriptor, const int serverFielDescriptor) const;   
     };
 
 };
