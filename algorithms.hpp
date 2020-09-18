@@ -1,0 +1,9 @@
+
+namespace algorithms{
+
+class Solver{
+
+
+};
+
+}
