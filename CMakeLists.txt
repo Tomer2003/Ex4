@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(tester VERSION 0.1.0)
 
+set(C_STANDARD C99)
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+
 include(CTest)
 enable_testing()
 

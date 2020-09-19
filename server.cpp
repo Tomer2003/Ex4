@@ -74,7 +74,7 @@ namespace server_side{
                 client = m_clients[0];
                 m_clients.erase(m_clients.begin());
                 clients_vector_mutex.unlock();
-                getClientHandler().handleClient(client, getFileDescriptor());
+                getClientHandler().handleClient(client);
             }
             else{
                 clients_vector_mutex.unlock();
