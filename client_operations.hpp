@@ -2,6 +2,9 @@
 #include <iostream>
 #include <algorithm>
 #include <unistd.h>
+#include <mutex>
+#include <thread>
+
 namespace client_operations{
     class ClientHandler{
     public:
@@ -34,6 +37,18 @@ namespace client_operations{
             //throw exception!
             return ;
         }*/
+
+        /**
+         * @brief The function stop client connection if the server waits more than 5 seconds to client message
+         * 
+         * @param ptrClientSendMessage - if client send message(pointer)
+         * @param clientFielDescriptor - client file descriptor
+         * @param stopConnection - if should stop connection(waits more than 5 seconds)
+         * @param mutex - mutex 
+         */
+        void stopConnection(bool* ptrClientSendMessage, const int clientFielDescriptor, bool* stopConnection, std::mutex* mutex) const;
+
+        void aaa();
 
         static void getMessageWithoutMultipleSpaces(std::string& string);
     };

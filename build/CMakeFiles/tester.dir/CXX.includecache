@@ -19,6 +19,10 @@ algorithm
 -
 unistd.h
 -
+mutex
+-
+thread
+-
 
 /home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp
 string

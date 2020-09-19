@@ -3,6 +3,16 @@
 namespace client_operations{
 
     
+    void GraphPathHandler::stopConnection(bool* ptrClientSendMessage, const int clientFielDescriptor, bool* stopConnection, std::mutex* mutex) const{
+      sleep(5);
+      mutex->lock();
+      if(!*ptrClientSendMessage){
+        close(clientFielDescriptor);
+        *stopConnection = true;
+      }
+      mutex->unlock();
+    }
+
     void GraphPathHandler::getMessageWithoutMultipleSpaces(std::string& string){
       std::replace(string.begin(), string.end(), '\t', ' ');
     	std::string::iterator new_end =
@@ -13,10 +23,24 @@ namespace client_operations{
         string.erase(0, 1);
       }
     }
-
+    
     void GraphPathHandler::handleClient(const int clientFielDescriptor) const{
       std::string operationDefineMessage(BYTES_TO_READ_PER_STREAM, '\0');
+
+      //check if the server waits more than 5 seconds to client message
+      bool clientSendMessage = false;
+      bool stopClientConnection = false;
+      std::mutex mutex;
+      std::thread thread(&GraphPathHandler::stopConnection, this, &clientSendMessage, clientFielDescriptor, &stopClientConnection, &mutex);
       read(clientFielDescriptor, (void*)operationDefineMessage.data(), BYTES_TO_READ_PER_STREAM);
+      thread.join();
+      mutex.lock();
+      clientSendMessage = true;
+      if(stopClientConnection){
+        return;
+      }
+      mutex.unlock();
+
       getMessageWithoutMultipleSpaces(operationDefineMessage);
       auto operation = operationDefineMessage.substr(0, operationDefineMessage.find(" "));
       operationDefineMessage.erase(0, operationDefineMessage.find(" ") + 1);
@@ -31,9 +55,9 @@ namespace client_operations{
         //throw exception!
       }
 
-      std::cout << operation << " " << problem << " " << algorithm << std::endl;
+      std::cout << operation << " " << problem << " " << algorithm << std::endl;      
       close(clientFielDescriptor);
-
+      
 
     }
 
