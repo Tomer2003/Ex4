@@ -2,20 +2,6 @@
 #define NO_PASSAGE_NODE -1
 
 namespace solver_tasks{
-    /*Solver::Solver(const Problem& problem, const Solution& solution) noexcept : m_solution(solution), m_problem(problem){};
-
-    const Result& Solver::solve() const{
-        return m_problem.solve(m_solution);
-    }
-
-
-    MatrixPathState::MatrixPathState(const unsigned int row, const unsigned int column) noexcept : m_row(row), m_column(column){};
-
-
-    bool MatrixPathState::equals(const MatrixPathState& matrixPathState) const{
-        return m_row == matrixPathState.m_row && m_column == matrixPathState.m_column;
-    }
-*/
     PointNode::PointNode(const unsigned int row, const unsigned int column) noexcept : m_row(row), m_column(column){}
 
     bool PointNode::operator==(const PointNode& pointNode) const{
@@ -48,6 +34,7 @@ namespace solver_tasks{
 
     MatrixGraphPath::MatrixGraphPath(const matrix::Matrix& matrixGraph, const PointNode& initialNode, const PointNode& goalNdoe) noexcept : m_matrixGraph(matrixGraph), m_initialNode(initialNode), m_goalNode(goalNdoe){
         setStatesOfMatrix();
+        setDistanceForStatesToGoalState();
     }
 
     State<PointNode>& MatrixGraphPath::getInitialState(){
@@ -82,9 +69,11 @@ namespace solver_tasks{
         }
     }
 
-   /* template <class Node> bool compareCost(State<Node> state1, State<Node> state2){
-        return (state1.getCost() < state2.getCost());
-    }*/
+    void MatrixGraphPath::setDistanceForStatesToGoalState(){
+        for(State<PointNode> state : getStatesVector()){
+            state.setDistanceToGoalState(std::sqrt(std::pow(m_goalNode.getRow() - state.getNode().getRow(), 2) + std::pow(m_goalNode.getColumn() - state.getNode().getColumn(), 2)));
+        }
+    }
 
     std::vector<State<PointNode>*> MatrixGraphPath::getAllPossibleStates(const State<PointNode>& state){
         std::vector<State<PointNode>*> possibleStates;
@@ -98,33 +87,6 @@ namespace solver_tasks{
         }
 
         std::sort(possibleStates.begin(), possibleStates.end(), State<PointNode>::compareCost);
-
-       // std::sort(possibleStates.begin(), possibleStates.end(), compareCost<PointNode>);
-/*
-        if(state.getNode().getRow() + 1 <= m_matrixGraph.matrixGetWidth() - 1 && m_matrixGraph(state.getNode().getRow() + 1, state.getNode().getColumn()) != NO_PASSAGE_NODE){
-            possibleStates.push_back(State<PointNode>(PointNode(state.getNode().getRow() + 1, state.getNode().getColumn()),
-            m_matrixGraph(state.getNode().getRow() + 1, state.getNode().getColumn())));
-            getStatesVector().push_back(possibleStates.front());
-        }
-
-        if(state.getNode().getRow()  >= 1 && m_matrixGraph(state.getNode().getRow() - 1, state.getNode().getColumn()) != NO_PASSAGE_NODE) {
-            possibleStates.push_back(State<PointNode>(PointNode(state.getNode().getRow() - 1, state.getNode().getColumn()),
-            m_matrixGraph(state.getNode().getRow() - 1, state.getNode().getColumn())));
-            getStatesVector().push_back(possibleStates.front());
-        }
-
-        if(state.getNode().getColumn() + 1 <= m_matrixGraph.matrixGetHeight() - 1 && m_matrixGraph(state.getNode().getRow(), state.getNode().getColumn() + 1) != NO_PASSAGE_NODE){
-            possibleStates.push_back(State<PointNode>(PointNode(state.getNode().getRow(), state.getNode().getColumn() + 1),
-            m_matrixGraph(state.getNode().getRow(), state.getNode().getColumn() + 1)));
-            getStatesVector().push_back(possibleStates.front());
-        }
-
-        if(state.getNode().getColumn()  >= 1 && m_matrixGraph(state.getNode().getRow(), state.getNode().getColumn() - 1) != NO_PASSAGE_NODE){
-            possibleStates.push_back(State<PointNode>(PointNode(state.getNode().getRow(), state.getNode().getColumn() - 1),
-            m_matrixGraph(state.getNode().getRow(), state.getNode().getColumn() - 1)));
-            getStatesVector().push_back(possibleStates.front());
-        }
-*/
         return possibleStates;
     }
 }

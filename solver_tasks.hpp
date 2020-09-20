@@ -4,6 +4,10 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
+#include <cmath>
+#include <map>
+
+#define INFINITY_COST -1
 
 namespace solver_tasks{
 
@@ -48,6 +52,7 @@ private:
     unsigned int m_cost;
     bool m_visited;
     State<Node>* m_ptrCameFrom;
+    unsigned int m_distanceToGoalState;
 
 public:
     /**
@@ -56,7 +61,7 @@ public:
      * @param node - node of state.
      * @param cost - cost of state.
      */
-    State(const Node& node, const unsigned int cost) noexcept : m_node(node), m_cost(cost), m_visited(false), m_ptrCameFrom(nullptr){};
+    State(const Node& node, const unsigned int cost) noexcept : m_node(node), m_cost(cost), m_visited(false), m_ptrCameFrom(nullptr), m_distanceToGoalState(0){};
 
     /**
      * @brief The function return node.
@@ -102,19 +107,35 @@ public:
         return (ptrState1->getCost() < ptrState2->getCost());
     }
 
-/*
-    State<Node>& operator=(State<Node>&& other){
-         if(this != &other){  
-            this->m_cost = other.m_cost;
-            this->m_node = other.m_node;
-            this->m_ptrCameFrom = other.m_ptrCameFrom;
-            this->m_visited = other.m_visited;
-            other.m_ptrCameFrom = nullptr;
-            other.m_node = nullptr;
-        }
-        return *this;
+   /**
+     * @brief The function comapre cost between two states
+     * 
+     * @param state - state to compare
+     * @return true - first cost state bigger than secind cost state
+     * @return false - first cost state smaller than secind cost state
+     */
+    bool operator<(const State<Node>& state) const{
+        return state.m_cost < m_cost;
     }
-*/
+
+    /**
+     * @brief The function set distance to goal state from current state
+     * 
+     * @return unsigned int - distance to goal state from current state
+     */
+    void setDistanceToGoalState(unsigned int distanceToGoalState){
+        m_distanceToGoalState = distanceToGoalState;
+    }
+
+    /**
+     * @brief The function return distance to goal state from current state
+     * 
+     * @return unsigned int - distance to goal state from current state
+     */
+    unsigned int getDistanceToGoalState() const{
+        return m_distanceToGoalState;
+    }
+
     /**
      * @brief The function retun cost of state.
      * 
@@ -151,6 +172,8 @@ public:
     std::string operator>>(const State<Node>& state) const{
         return m_node >> state.getNode();
     }
+
+
 };
 
 class PointNode{
@@ -282,6 +305,12 @@ public:
      * 
      */
     void setStatesOfMatrix();
+
+    /**
+     * @brief The function set distance for all states to goal state
+     * 
+     */
+    void setDistanceForStatesToGoalState();
 };
 
 template <class Node> class Solution{ 
@@ -321,12 +350,12 @@ public:
         }
 
         solution += std::to_string(cost) + "," + m_algorithm;
-     //   std::cout << m_solutionPathStates.at(0).getCost() << " " << m_solutionPathStates.at(1).getCost() << (m_solutionPathStates.at(0) >> m_solutionPathStates.at(1)) << std::endl;
-       for(int element = 0; element < (int)m_solutionPathStates.size() - 1; ++element){
+    
+        for(int element = 0; element < (int)m_solutionPathStates.size() - 1; ++element){
            solution += "," + (m_solutionPathStates.at(element) >> m_solutionPathStates.at(element + 1));
-       }
+        }
 
-       return solution;
+        return solution;
     }
 };
 
@@ -387,16 +416,20 @@ public:
 
 template <class Node> class DepthFirstSearch : public Searcher<Node>{
 private:
-
-    void dfs(State<Node>& currentState, Searchable<Node>& searchable, int counter){
+    /**
+     * @brief The function initilize states of matrix.
+     * 
+     * @param currentState - starting state.
+     * @param searchable -  object for search.
+     */
+    void dfs(State<Node>& currentState, Searchable<Node>& searchable){
         if(!currentState.getVisited()){
-            counter++;
             currentState.setVisited(true);
             for(State<Node>* state : searchable.getAllPossibleStates(currentState)){
                 if(!state->hasPreviousState()){
                     state->setPrevState(currentState);
                 }
-                dfs(*state, searchable, counter);
+                dfs(*state, searchable);
             }
         }
     }
@@ -410,7 +443,7 @@ public:
     virtual Solution<Node> search(Searchable<Node>& searchable){
         State<Node>& initialState = searchable.getInitialState();
     
-       dfs(initialState, searchable, 0);
+       dfs(initialState, searchable);
        
         std::vector<State<Node>> solutionPathStates;
         State<Node> state = searchable.getGoalState();
@@ -430,5 +463,56 @@ public:
     }
 };
 
+template <class Node> class AStar : public Searcher<Node>{
+public:
+    /**
+     * @brief The function search the solution in searchable and return it.
+     * 
+     * @param searchable - object for search.
+     * @return Solution - solution of searching.
+     */
+    virtual Solution<Node> search(Searchable<Node>& searchable){
+        std::map<unsigned int, State<Node>> statesPriorityMap;
+        std::map<State<Node>, unsigned int> statesDistMap;
+        State<Node>& initialState = searchable.getInitialState();   
+
+        statesPriorityMap.insert(std::pair<unsigned int, State<Node>>(initialState.getDistanceToGoalState(), initialState));
+        statesDistMap.insert(std::pair<State<Node>, unsigned int>(initialState, initialState.getDistanceToGoalState()));
+
+        while(!statesPriorityMap.empty()){
+            State<Node>& currentState = statesPriorityMap.begin()->second;
+            statesPriorityMap.erase(statesPriorityMap.begin()->first);
+            for(State<Node>* state : searchable.getAllPossibleStates(currentState)){
+                if(!state->getVisited()){
+                    if(statesDistMap.find(*state) != statesDistMap.end()){
+                        if(statesDistMap[currentState] + state->getCost() + state->getDistanceToGoalState() < statesDistMap[*state]){
+                            statesDistMap[*state] = statesDistMap[currentState] + state->getCost() + state->getDistanceToGoalState();
+                            state->setPrevState(currentState);
+                        }
+                    }
+                    statesDistMap.insert(std::pair<State<Node>, unsigned int>(*state, statesDistMap[currentState] + state->getCost() + state->getDistanceToGoalState()));
+                    state->setPrevState(currentState);
+                }
+            }
+            currentState.setVisited(true);
+        }
+      
+        std::vector<State<Node>> solutionPathStates;
+        State<Node> state = searchable.getGoalState();
+        for(; state.hasPreviousState(); state = state.getCameFromState()){
+            solutionPathStates.push_back(state);    
+        }
+        solutionPathStates.push_back(state);
+        
+        std::reverse(solutionPathStates.begin(), solutionPathStates.end());
+
+        if(!(solutionPathStates.at(0).getNode() == searchable.getInitialState().getNode())){
+            solutionPathStates.clear();
+        }
+
+        return Solution<Node>(solutionPathStates, "A*");
+       
+    }
+};
 
 }
