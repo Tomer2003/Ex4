@@ -4,6 +4,7 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
+
 namespace solver_tasks{
 
 /*
@@ -380,6 +381,51 @@ public:
         }
 
         return Solution<Node>(solutionPathStates, "BFS");
+       
+    }
+};
+
+template <class Node> class DepthFirstSearch : public Searcher<Node>{
+private:
+
+    void dfs(State<Node>& currentState, Searchable<Node>& searchable, int counter){
+        if(!currentState.getVisited()){
+            counter++;
+            currentState.setVisited(true);
+            for(State<Node>* state : searchable.getAllPossibleStates(currentState)){
+                if(!state->hasPreviousState()){
+                    state->setPrevState(currentState);
+                }
+                dfs(*state, searchable, counter);
+            }
+        }
+    }
+public:
+    /**
+     * @brief The function search the solution in searchable and return it.
+     * 
+     * @param searchable - object for search.
+     * @return Solution - solution of searching.
+     */
+    virtual Solution<Node> search(Searchable<Node>& searchable){
+        State<Node>& initialState = searchable.getInitialState();
+    
+       dfs(initialState, searchable, 0);
+       
+        std::vector<State<Node>> solutionPathStates;
+        State<Node> state = searchable.getGoalState();
+        for(; state.hasPreviousState() && !(state.getNode() == initialState.getNode()); state = state.getCameFromState()){
+            solutionPathStates.push_back(state);    
+        }
+        solutionPathStates.push_back(state);
+        
+        std::reverse(solutionPathStates.begin(), solutionPathStates.end());
+
+        if(!(solutionPathStates.at(0).getNode() == searchable.getInitialState().getNode())){
+            solutionPathStates.clear();
+        }
+
+        return Solution<Node>(solutionPathStates, "DFS");
        
     }
 };
