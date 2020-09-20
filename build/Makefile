@@ -574,6 +574,60 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+matrix/ClassMatrix.o: matrix/ClassMatrix.cpp.o
+
+.PHONY : matrix/ClassMatrix.o
+
+# target to build an object file
+matrix/ClassMatrix.cpp.o:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o
+.PHONY : matrix/ClassMatrix.cpp.o
+
+matrix/ClassMatrix.i: matrix/ClassMatrix.cpp.i
+
+.PHONY : matrix/ClassMatrix.i
+
+# target to preprocess a source file
+matrix/ClassMatrix.cpp.i:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.i
+.PHONY : matrix/ClassMatrix.cpp.i
+
+matrix/ClassMatrix.s: matrix/ClassMatrix.cpp.s
+
+.PHONY : matrix/ClassMatrix.s
+
+# target to generate assembly for a file
+matrix/ClassMatrix.cpp.s:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.s
+.PHONY : matrix/ClassMatrix.cpp.s
+
+matrix/MatrixExceptions.o: matrix/MatrixExceptions.cpp.o
+
+.PHONY : matrix/MatrixExceptions.o
+
+# target to build an object file
+matrix/MatrixExceptions.cpp.o:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.o
+.PHONY : matrix/MatrixExceptions.cpp.o
+
+matrix/MatrixExceptions.i: matrix/MatrixExceptions.cpp.i
+
+.PHONY : matrix/MatrixExceptions.i
+
+# target to preprocess a source file
+matrix/MatrixExceptions.cpp.i:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.i
+.PHONY : matrix/MatrixExceptions.cpp.i
+
+matrix/MatrixExceptions.s: matrix/MatrixExceptions.cpp.s
+
+.PHONY : matrix/MatrixExceptions.s
+
+# target to generate assembly for a file
+matrix/MatrixExceptions.cpp.s:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.s
+.PHONY : matrix/MatrixExceptions.cpp.s
+
 server.o: server.cpp.o
 
 .PHONY : server.o
@@ -600,6 +654,33 @@ server.s: server.cpp.s
 server.cpp.s:
 	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/server.cpp.s
 .PHONY : server.cpp.s
+
+solver_tasks.o: solver_tasks.cpp.o
+
+.PHONY : solver_tasks.o
+
+# target to build an object file
+solver_tasks.cpp.o:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/solver_tasks.cpp.o
+.PHONY : solver_tasks.cpp.o
+
+solver_tasks.i: solver_tasks.cpp.i
+
+.PHONY : solver_tasks.i
+
+# target to preprocess a source file
+solver_tasks.cpp.i:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/solver_tasks.cpp.i
+.PHONY : solver_tasks.cpp.i
+
+solver_tasks.s: solver_tasks.cpp.s
+
+.PHONY : solver_tasks.s
+
+# target to generate assembly for a file
+solver_tasks.cpp.s:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/solver_tasks.cpp.s
+.PHONY : solver_tasks.cpp.s
 
 # Help Target
 help:
@@ -647,9 +728,18 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... matrix/ClassMatrix.o"
+	@echo "... matrix/ClassMatrix.i"
+	@echo "... matrix/ClassMatrix.s"
+	@echo "... matrix/MatrixExceptions.o"
+	@echo "... matrix/MatrixExceptions.i"
+	@echo "... matrix/MatrixExceptions.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"
+	@echo "... solver_tasks.o"
+	@echo "... solver_tasks.i"
+	@echo "... solver_tasks.s"
 .PHONY : help
 
 

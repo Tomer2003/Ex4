@@ -96,7 +96,7 @@ namespace matrix{
         }
         auto content = std::string{std::istreambuf_iterator<char>{inFile},
                                 std::istreambuf_iterator<char>{}};
-        
+                     
         content.erase(std::remove(content.begin(), content.end(), ' '), content.end());
         content.erase(std::remove(content.begin(), content.end(), '\t'), content.end());
         content.erase(std::remove(content.begin(), content.end(), '\r'), content.end());
@@ -112,12 +112,14 @@ namespace matrix{
         }
 
         auto matrixHeight = valuesArr.size() / matrixWidth;
+
         matrix::Matrix matrix(matrixHeight, matrixWidth);
         for(unsigned int row = 0; row < matrixHeight; ++row){
             for(unsigned int col = 0; col < matrixWidth; ++col){
                 matrix.matrixSetValue(row, col, valuesArr[row * matrixWidth + col]);
             }
         }
+        
         return matrix;
     }
 

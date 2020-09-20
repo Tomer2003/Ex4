@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -Wall -Wextra -pedantic -Werror
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I"/home/tomer/Advanced Programmin 1/Ex4/matrix" 
 

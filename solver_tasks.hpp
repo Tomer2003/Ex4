@@ -1,7 +1,9 @@
 #include "matrix/ClassMatrix.hpp"
 #include <string>
 #include <vector>
+#include <iostream>
 #include <queue>
+#include <algorithm>
 namespace solver_tasks{
 
 /*
@@ -41,8 +43,8 @@ public:
 
 template <class Node> class State{
 private:    
-    const Node m_node;
-    const unsigned int m_cost;
+    Node m_node;
+    unsigned int m_cost;
     bool m_visited;
     State<Node>* m_ptrCameFrom;
 
@@ -53,7 +55,7 @@ public:
      * @param node - node of state.
      * @param cost - cost of state.
      */
-    State(const Node& node, const unsigned int cost) noexcept : m_node(node), m_visited(false), m_cost(cost), m_ptrCameFrom(nullptr){};
+    State(const Node& node, const unsigned int cost) noexcept : m_node(node), m_cost(cost), m_visited(false), m_ptrCameFrom(nullptr){};
 
     /**
      * @brief The function return node.
@@ -62,6 +64,10 @@ public:
      */
     Node getNode() const{
         return m_node;
+    }
+
+    bool hasPreviousState() const{
+        return m_ptrCameFrom != nullptr;
     }
 
     /**
@@ -82,7 +88,19 @@ public:
     State<Node> getCameFromState() const{
         return *m_ptrCameFrom;
     }
-
+/*
+    State<Node>& operator=(State<Node>&& other){
+         if(this != &other){  
+            this->m_cost = other.m_cost;
+            this->m_node = other.m_node;
+            this->m_ptrCameFrom = other.m_ptrCameFrom;
+            this->m_visited = other.m_visited;
+            other.m_ptrCameFrom = nullptr;
+            other.m_node = nullptr;
+        }
+        return *this;
+    }
+*/
     /**
      * @brief The function retun cost of state.
      * 
@@ -107,7 +125,7 @@ public:
      * @param state - previous state that came from.
      */
     void setPrevState(const State<Node>& state){
-        m_ptrCameFrom = &state;
+        m_ptrCameFrom = (State<Node>*)(&state);
     }
 
     /**
@@ -178,13 +196,11 @@ public:
     virtual State<Node> getInitialState() const = 0;
 
     /**
-     * @brief The function checks if state is goal state 
+     * @brief The function return goal state
      * 
-     * @param state - state to check if goal state
-     * @return true - its goal state
-     * @return false - its not goal state
+     * @return State<Node> - goal state 
      */
-    virtual bool isGoalState(const State<Node>& state) const = 0;
+    virtual State<Node> getGoalState() const = 0;
 
     /**
      * @brief The function return all possible states to reach from current state
@@ -220,13 +236,11 @@ public:
 
 
     /**
-     * @brief The function checks if state is goal state 
+     * @brief The function return goal state
      * 
-     * @param state - state to check if goal state
-     * @return true - its goal state
-     * @return false - its not goal state
+     * @return State<Node> - goal state 
      */
-    virtual bool isGoalState(const State<PointNode>& state) const;
+    virtual State<PointNode> getGoalState() const;
 
 
     /**
@@ -279,7 +293,7 @@ public:
 
         solution += std::to_string(cost) + "," + m_algorithm;
 
-       for(int element; element < m_solutionPathStates.size() - 1; ++element){
+       for(int element = 0; element < m_solutionPathStates.size() - 1; ++element){
            solution += "," + m_solutionPathStates.at(element) >> m_solutionPathStates.at(element + 1);
        }
 
@@ -299,7 +313,8 @@ template <class Node> class Searcher{
     virtual Solution<Node> search(const Searchable<Node>& searchable) const = 0;
 };
 
-template <class Node> class breadthFirstSearch : public Searcher<Node>{
+template <class Node> class BreadthFirstSearch : public Searcher<Node>{
+public:
     /**
      * @brief The function search the solution in searchable and return it.
      * 
@@ -312,7 +327,9 @@ template <class Node> class breadthFirstSearch : public Searcher<Node>{
         searchable.getInitialState().setVisited(true);
 
         while(!statesQueue.empty()){
-            State<Node> currentState = statesQueue.pop();
+            State<Node> currentState = statesQueue.front();
+            statesQueue.pop();
+            std::cout << "a" << std::endl;
             for(State<Node> state : searchable.getAllPossibleStates(currentState)){
                 if(!state.getVisited()){
                     statesQueue.push(state);
@@ -323,12 +340,14 @@ template <class Node> class breadthFirstSearch : public Searcher<Node>{
         }
         
         std::vector<State<Node>> solutionPathStates;
-        for(State<Node> state = searchable.getGoalState(); state != nullptr; state = state.getCameFromState()){
+        for(State<Node> state = searchable.getGoalState(); state.hasPreviousState(); state = state.getCameFromState()){
             solutionPathStates.push_back(state);    
         }
-        solutionPathStates.reserve(solutionPathStates.begin(), solutionPathStates.end());
+        
 
-        if(solutionPathStates.at(0).getNode() != searchable.getInitialState().getNode()){
+        std::reverse(solutionPathStates.begin(), solutionPathStates.end());
+
+        if(!(solutionPathStates.at(0).getNode() == searchable.getInitialState().getNode())){
             solutionPathStates.clear();
         }
 

@@ -1,1 +1,1 @@
-/bin/c++  -g  -rdynamic CMakeFiles/tester.dir/main.cpp.o CMakeFiles/tester.dir/server.cpp.o CMakeFiles/tester.dir/client_operations.cpp.o  -o tester  -lpthread 
+/bin/c++  -g  -rdynamic CMakeFiles/tester.dir/main.cpp.o CMakeFiles/tester.dir/server.cpp.o CMakeFiles/tester.dir/client_operations.cpp.o CMakeFiles/tester.dir/solver_tasks.cpp.o CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.o CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o  -o tester   -L"/home/tomer/Advanced Programmin 1/Ex4/matrix"  -Wl,-rpath,"/home/tomer/Advanced Programmin 1/Ex4/matrix" -lmatrix -lpthread 

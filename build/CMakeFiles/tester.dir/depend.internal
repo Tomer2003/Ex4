@@ -16,6 +16,16 @@ CMakeFiles/tester.dir/main.cpp.o
  /home/tomer/Advanced Programmin 1/Ex4/matrix/Matrix.h
  /home/tomer/Advanced Programmin 1/Ex4/server.hpp
  /home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp
+CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.cpp
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.hpp
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/ErrorCode.h
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/Matrix.h
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.hpp
+CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.o
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/ErrorCode.h
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.cpp
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.hpp
 CMakeFiles/tester.dir/server.cpp.o
  /home/tomer/Advanced Programmin 1/Ex4/client_operations.hpp
  /home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.hpp
@@ -23,4 +33,10 @@ CMakeFiles/tester.dir/server.cpp.o
  /home/tomer/Advanced Programmin 1/Ex4/matrix/Matrix.h
  /home/tomer/Advanced Programmin 1/Ex4/server.cpp
  /home/tomer/Advanced Programmin 1/Ex4/server.hpp
+ /home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp
+CMakeFiles/tester.dir/solver_tasks.cpp.o
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.hpp
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/ErrorCode.h
+ /home/tomer/Advanced Programmin 1/Ex4/matrix/Matrix.h
+ /home/tomer/Advanced Programmin 1/Ex4/solver_tasks.cpp
  /home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp

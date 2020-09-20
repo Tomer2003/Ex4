@@ -16,6 +16,16 @@ CMakeFiles/tester.dir/main.cpp.o: ../matrix/Matrix.h
 CMakeFiles/tester.dir/main.cpp.o: ../server.hpp
 CMakeFiles/tester.dir/main.cpp.o: ../solver_tasks.hpp
 
+CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o: ../matrix/ClassMatrix.cpp
+CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o: ../matrix/ClassMatrix.hpp
+CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o: ../matrix/ErrorCode.h
+CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o: ../matrix/Matrix.h
+CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o: ../matrix/MatrixExceptions.hpp
+
+CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.o: ../matrix/ErrorCode.h
+CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.o: ../matrix/MatrixExceptions.cpp
+CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.o: ../matrix/MatrixExceptions.hpp
+
 CMakeFiles/tester.dir/server.cpp.o: ../client_operations.hpp
 CMakeFiles/tester.dir/server.cpp.o: ../matrix/ClassMatrix.hpp
 CMakeFiles/tester.dir/server.cpp.o: ../matrix/ErrorCode.h
@@ -23,4 +33,10 @@ CMakeFiles/tester.dir/server.cpp.o: ../matrix/Matrix.h
 CMakeFiles/tester.dir/server.cpp.o: ../server.cpp
 CMakeFiles/tester.dir/server.cpp.o: ../server.hpp
 CMakeFiles/tester.dir/server.cpp.o: ../solver_tasks.hpp
+
+CMakeFiles/tester.dir/solver_tasks.cpp.o: ../matrix/ClassMatrix.hpp
+CMakeFiles/tester.dir/solver_tasks.cpp.o: ../matrix/ErrorCode.h
+CMakeFiles/tester.dir/solver_tasks.cpp.o: ../matrix/Matrix.h
+CMakeFiles/tester.dir/solver_tasks.cpp.o: ../solver_tasks.cpp
+CMakeFiles/tester.dir/solver_tasks.cpp.o: ../solver_tasks.hpp
 

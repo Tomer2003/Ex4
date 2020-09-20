@@ -72,6 +72,10 @@ vector
 mutex
 -
 
+/home/tomer/Advanced Programmin 1/Ex4/solver_tasks.cpp
+solver_tasks.hpp
+/home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp
+
 /home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp
 matrix/ClassMatrix.hpp
 /home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.hpp
@@ -79,6 +83,10 @@ string
 -
 vector
 -
+iostream
+-
 queue
+-
+algorithm
 -
 
