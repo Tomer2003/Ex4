@@ -88,6 +88,19 @@ public:
     State<Node> getCameFromState() const{
         return *m_ptrCameFrom;
     }
+
+    /**
+     * @brief The function comapre cost between two states
+     * 
+     * @param ptrState1 - pointer to first state
+     * @param ptrState2 - pointer to second state
+     * @return true - first cost state bigger than secind cost state
+     * @return false - first cost state smaller than secind cost state
+     */
+    static bool compareCost(State<Node>* ptrState1, State<Node>* ptrState2){
+        return (ptrState1->getCost() < ptrState2->getCost());
+    }
+
 /*
     State<Node>& operator=(State<Node>&& other){
          if(this != &other){  
@@ -187,20 +200,23 @@ public:
 
 
 template <class Node> class Searchable{
+private:
+    std::vector<State<PointNode>> m_states;
+
 public:
     /**
      * @brief The function return initial state
      * 
      * @return State<Node> - initial state
      */
-    virtual State<Node> getInitialState() const = 0;
+    virtual State<Node>& getInitialState() = 0;
 
     /**
      * @brief The function return goal state
      * 
      * @return State<Node> - goal state 
      */
-    virtual State<Node> getGoalState() const = 0;
+    virtual State<Node>& getGoalState() = 0;
 
     /**
      * @brief The function return all possible states to reach from current state
@@ -208,7 +224,16 @@ public:
      * @param state - current state
      * @return std::vector<State<Node>> - vector of all possible states to reach from current state
      */
-    virtual std::vector<State<Node>> getAllPossibleStates(const State<Node>& state) const = 0;
+    virtual std::vector<State<Node>*> getAllPossibleStates(const State<Node>& state) = 0;
+
+    /**
+     * @brief The function return states. 
+     * 
+     * @return std::vector<State<Ndoe>> - states of problem.
+     */
+    std::vector<State<Node>>& getStatesVector(){
+        return m_states;
+    } 
 };
 
 class MatrixGraphPath : public Searchable<PointNode>{
@@ -232,7 +257,7 @@ public:
      * 
      * @return State<Node> - initial state
      */
-    virtual State<PointNode> getInitialState() const;
+    virtual State<PointNode>& getInitialState();
 
 
     /**
@@ -240,7 +265,7 @@ public:
      * 
      * @return State<Node> - goal state 
      */
-    virtual State<PointNode> getGoalState() const;
+    virtual State<PointNode>& getGoalState();
 
 
     /**
@@ -249,7 +274,13 @@ public:
      * @param state - current state
      * @return std::vector<State<Node>> - vector of all possible states to reach from current state
      */
-    virtual std::vector<State<PointNode>> getAllPossibleStates(const State<PointNode>& state) const;
+    virtual std::vector<State<PointNode>*> getAllPossibleStates(const State<PointNode>& state);
+
+    /**
+     * @brief The function set all states of matrix to m_states vector
+     * 
+     */
+    void setStatesOfMatrix();
 };
 
 template <class Node> class Solution{ 
@@ -263,10 +294,7 @@ public:
      * @param solutionPathStates - vector of states to solution path.
      * @param algorithm - algorithm name.
      */
-    Solution(const std::vector<State<Node>>& solutionPathStates, std::string algorithm){
-        m_solutionPathStates = solutionPathStates;
-        m_algorithm = algorithm;
-    }
+    Solution(const std::vector<State<Node>>& solutionPathStates, const std::string& algorithm) : m_solutionPathStates(solutionPathStates), m_algorithm(algorithm){};
 
     /**
      * @brief The function check if solution graph path is exist.
@@ -292,14 +320,13 @@ public:
         }
 
         solution += std::to_string(cost) + "," + m_algorithm;
-
-       for(int element = 0; element < m_solutionPathStates.size() - 1; ++element){
-           solution += "," + m_solutionPathStates.at(element) >> m_solutionPathStates.at(element + 1);
+     //   std::cout << m_solutionPathStates.at(0).getCost() << " " << m_solutionPathStates.at(1).getCost() << (m_solutionPathStates.at(0) >> m_solutionPathStates.at(1)) << std::endl;
+       for(int element = 0; element < (int)m_solutionPathStates.size() - 1; ++element){
+           solution += "," + (m_solutionPathStates.at(element) >> m_solutionPathStates.at(element + 1));
        }
 
        return solution;
     }
-
 };
 
 
@@ -310,7 +337,7 @@ template <class Node> class Searcher{
      * @param searchable - object for search.
      * @return Solution - solution of searching.
      */
-    virtual Solution<Node> search(const Searchable<Node>& searchable) const = 0;
+    virtual Solution<Node> search(Searchable<Node>& searchable) = 0;
 };
 
 template <class Node> class BreadthFirstSearch : public Searcher<Node>{
@@ -321,30 +348,31 @@ public:
      * @param searchable - object for search.
      * @return Solution - solution of searching.
      */
-    virtual Solution<Node> search(const Searchable<Node>& searchable) const{
+    virtual Solution<Node> search(Searchable<Node>& searchable){
         std::queue<State<Node>> statesQueue;
-        statesQueue.push(searchable.getInitialState());
-        searchable.getInitialState().setVisited(true);
+        State<Node> initialState = searchable.getInitialState();
+        initialState.setVisited(true);
+        statesQueue.push(initialState);
 
         while(!statesQueue.empty()){
-            State<Node> currentState = statesQueue.front();
+            State<Node>& currentState = statesQueue.front();
             statesQueue.pop();
-            std::cout << "a" << std::endl;
-            for(State<Node> state : searchable.getAllPossibleStates(currentState)){
-                if(!state.getVisited()){
-                    statesQueue.push(state);
-                    state.setVisited(true);
-                    state.setPrevState(currentState);
+            for(State<Node>* state : searchable.getAllPossibleStates(currentState)){
+                if(!state->getVisited()){
+                    state->setVisited(true);
+                    state->setPrevState(currentState);
+                    statesQueue.push(*state);
                 }
             }
         }
-        
+       
         std::vector<State<Node>> solutionPathStates;
-        for(State<Node> state = searchable.getGoalState(); state.hasPreviousState(); state = state.getCameFromState()){
+        State<Node> state = searchable.getGoalState();
+        for(; state.hasPreviousState(); state = state.getCameFromState()){
             solutionPathStates.push_back(state);    
         }
+        solutionPathStates.push_back(state);
         
-
         std::reverse(solutionPathStates.begin(), solutionPathStates.end());
 
         if(!(solutionPathStates.at(0).getNode() == searchable.getInitialState().getNode())){
@@ -352,6 +380,7 @@ public:
         }
 
         return Solution<Node>(solutionPathStates, "BFS");
+       
     }
 };
 
