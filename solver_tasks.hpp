@@ -7,52 +7,17 @@
 #include <cmath>
 #include <map>
 
-#define INFINITY_COST -1
+//#define INFINITY_COST -1
 
 namespace solver_tasks{
-
-/*
-class Result{
-
-};
-
-class Problem {
-public:
-    virtual const Result& solve(const Solution& solution) const = 0;
-};
-
-
-class Solver{
-private:
-    const Solution& m_solution;
-    const Problem& m_problem;
-
-public:
-
-   
-     * @brief Construct a new Solver object.
-     * 
-     * @param problem - problem object.
-     * @param solution - way to solve the problem object.
-     */
-   /* Solver(const Problem& problem, const Solution& solution) noexcept;
-
-    
-     * @brief The function solve the problem with he solution.
-     * 
-     * @return Result - the result of the solution of the problem.
-     */
-  /*  const Result& solve() const;
-};
-*/
 
 template <class Node> class State{
 private:    
     Node m_node;
-    unsigned int m_cost;
+    double m_cost;
     bool m_visited;
     State<Node>* m_ptrCameFrom;
-    unsigned int m_distanceToGoalState;
+    double m_distanceToGoalState;
 
 public:
     /**
@@ -61,7 +26,7 @@ public:
      * @param node - node of state.
      * @param cost - cost of state.
      */
-    State(const Node& node, const unsigned int cost) noexcept : m_node(node), m_cost(cost), m_visited(false), m_ptrCameFrom(nullptr), m_distanceToGoalState(0){};
+    State(const Node& node, const double cost) noexcept : m_node(node), m_cost(cost), m_visited(false), m_ptrCameFrom(nullptr), m_distanceToGoalState(0){};
 
     /**
      * @brief The function return node.
@@ -114,34 +79,34 @@ public:
      * @return true - first cost state bigger than secind cost state
      * @return false - first cost state smaller than secind cost state
      */
-    bool operator<(const State<Node>& state) const{
+  /*  bool operator<(const State<Node>& state) const{
         return state.m_cost < m_cost;
     }
-
+*/
     /**
      * @brief The function set distance to goal state from current state
      * 
-     * @return unsigned int - distance to goal state from current state
+     * @return unsigned double - distance to goal state from current state
      */
-    void setDistanceToGoalState(unsigned int distanceToGoalState){
+    void setDistanceToGoalState(double distanceToGoalState){
         m_distanceToGoalState = distanceToGoalState;
     }
 
     /**
      * @brief The function return distance to goal state from current state
      * 
-     * @return unsigned int - distance to goal state from current state
+     * @return unsigned double - distance to goal state from current state
      */
-    unsigned int getDistanceToGoalState() const{
+    double getDistanceToGoalState() const{
         return m_distanceToGoalState;
     }
 
     /**
      * @brief The function retun cost of state.
      * 
-     * @return unsigned int - cost of state.
+     * @return unsigned double - cost of state.
      */
-    unsigned int getCost() const{
+    double getCost() const{
         return m_cost;
     }
 
@@ -180,6 +145,9 @@ class PointNode{
 private:
     unsigned int m_row;
     unsigned int m_column;
+    double m_xCoordinate;
+    double m_yCoordinate;
+
 
 public:
     /**
@@ -188,7 +156,7 @@ public:
      * @param row - row of matrix point. 
      * @param column - column of matrix point.
      */
-    PointNode(const unsigned int row, const unsigned int column) noexcept;
+    PointNode(const unsigned int row, const unsigned int column, const double yCoordinate, const double xCoordinate) noexcept;
 
     /**
      * @brief The function checks if two points are equal.
@@ -220,6 +188,34 @@ public:
      * @return unsigned int - column of point.
      */
     unsigned int getColumn() const;
+
+    /**
+     * @brief The function return y coordinate
+     * 
+     * @return unsigned double - y coordinate
+     */
+    double getYCoordinate() const;
+
+    /**
+     * @brief The function return x coordinate
+     * 
+     * @return unsigned double - x coordinate
+     */
+    double getXCoordinate() const;
+
+    /**
+     * @brief The function set x coordinate 
+     * 
+     * @param xCoordinate - x coordinate 
+     */
+    void setXCoordinate(const double xCoordinate);
+
+    /**
+     * @brief The function set y coordinate
+     * 
+     * @param yCoordinate - y coordinate 
+     */
+    void setYCoordinate(const double yCoordinate);
 };
 
 
@@ -258,6 +254,7 @@ public:
     std::vector<State<Node>>& getStatesVector(){
         return m_states;
     } 
+
 };
 
 class MatrixGraphPath : public Searchable<PointNode>{
@@ -311,6 +308,10 @@ public:
      * 
      */
     void setDistanceForStatesToGoalState();
+
+    State<PointNode>& getState(const unsigned int row, const unsigned int column);
+        
+
 };
 
 template <class Node> class Solution{ 
@@ -344,7 +345,7 @@ public:
     std::string getSolution() const{
         std::string solution;
 
-        unsigned int cost = 0;
+        double cost = 0;
         for(State<Node> state : m_solutionPathStates){
             cost += state.getCost();
         }
@@ -410,7 +411,6 @@ public:
         }
 
         return Solution<Node>(solutionPathStates, "BFS");
-       
     }
 };
 
@@ -472,26 +472,27 @@ public:
      * @return Solution - solution of searching.
      */
     virtual Solution<Node> search(Searchable<Node>& searchable){
-        std::map<unsigned int, State<Node>> statesPriorityMap;
-        std::map<State<Node>, unsigned int> statesDistMap;
+        std::map<double, State<Node>&> statesPriorityMap;
+        std::map<State<Node>*, double> statesDistMap;
         State<Node>& initialState = searchable.getInitialState();   
 
-        statesPriorityMap.insert(std::pair<unsigned int, State<Node>>(initialState.getDistanceToGoalState(), initialState));
-        statesDistMap.insert(std::pair<State<Node>, unsigned int>(initialState, initialState.getDistanceToGoalState()));
-
+        statesPriorityMap.insert(std::pair<double, State<Node>&>(initialState.getDistanceToGoalState() + initialState.getCost(), initialState));
+        statesDistMap.insert(std::pair<State<Node>*, double>(&initialState, initialState.getCost()));
         while(!statesPriorityMap.empty()){
             State<Node>& currentState = statesPriorityMap.begin()->second;
             statesPriorityMap.erase(statesPriorityMap.begin()->first);
             for(State<Node>* state : searchable.getAllPossibleStates(currentState)){
                 if(!state->getVisited()){
-                    if(statesDistMap.find(*state) != statesDistMap.end()){
-                        if(statesDistMap[currentState] + state->getCost() + state->getDistanceToGoalState() < statesDistMap[*state]){
-                            statesDistMap[*state] = statesDistMap[currentState] + state->getCost() + state->getDistanceToGoalState();
+                    if(statesDistMap.find(state) != statesDistMap.end()){
+                        if(statesDistMap[&currentState] + state->getCost() + state->getDistanceToGoalState() < statesDistMap[state] + state->getDistanceToGoalState()){
+                            statesDistMap[state] = statesDistMap[&currentState] + state->getCost();
                             state->setPrevState(currentState);
                         }
+                    } else{
+                        statesDistMap.insert(std::pair<State<Node>*, double>(state, statesDistMap[&currentState] + state->getCost()));
+                        state->setPrevState(currentState);
+                        statesPriorityMap.insert(std::pair<double, State<Node>&>(statesDistMap[state] + state->getDistanceToGoalState(), *state));    
                     }
-                    statesDistMap.insert(std::pair<State<Node>, unsigned int>(*state, statesDistMap[currentState] + state->getCost() + state->getDistanceToGoalState()));
-                    state->setPrevState(currentState);
                 }
             }
             currentState.setVisited(true);
