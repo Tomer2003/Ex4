@@ -113,6 +113,14 @@ namespace matrix{
         static Matrix getMatrixFromFile(std::string fileName);
 
         /**
+         * @brief The function return a Matrix From String 
+         * 
+         * @param fileName - name of file
+         * @return Matrix - matrix to return from file
+         */
+        static Matrix getMatrixFromString(std::string matrixString);
+
+        /**
          * @brief The function print matrix to cout
          * 
          */

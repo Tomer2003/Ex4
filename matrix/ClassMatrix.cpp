@@ -96,23 +96,25 @@ namespace matrix{
         }
         auto content = std::string{std::istreambuf_iterator<char>{inFile},
                                 std::istreambuf_iterator<char>{}};
-                     
-        content.erase(std::remove(content.begin(), content.end(), ' '), content.end());
-        content.erase(std::remove(content.begin(), content.end(), '\t'), content.end());
-        content.erase(std::remove(content.begin(), content.end(), '\r'), content.end());
-        auto matrixWidth = std::count(content.begin(), content.begin() + content.find("\n"), ',') + 1;
-        std::cout << "width = " << matrixWidth << std::endl; 
-        std::replace(content.begin(), content.end(), '\n', ',');
-        std::replace(content.begin(), content.end(), ',', ' ');
+
+        return getMatrixFromString(content);
+    }
+
+    Matrix Matrix::getMatrixFromString(std::string matrixString){
+        matrixString.erase(std::remove(matrixString.begin(), matrixString.end(), ' '), matrixString.end());
+        matrixString.erase(std::remove(matrixString.begin(), matrixString.end(), '\t'), matrixString.end());
+        matrixString.erase(std::remove(matrixString.begin(), matrixString.end(), '\r'), matrixString.end());
+        auto matrixWidth = std::count(matrixString.begin(), matrixString.begin() + matrixString.find("\n"), ',') + 1;
+        std::replace(matrixString.begin(), matrixString.end(), '\n', ',');
+        std::replace(matrixString.begin(), matrixString.end(), ',', ' ');
         std::vector<double> valuesArr;
-        std::stringstream stringStreamContent(content);
+        std::stringstream stringStreamContent(matrixString);
         double temp;
         while (stringStreamContent >> temp){
             valuesArr.push_back(temp);
         }
 
         auto matrixHeight = valuesArr.size() / matrixWidth;
-        std::cout << "height = " << matrixHeight << std::endl;
         matrix::Matrix matrix(matrixHeight, matrixWidth);
         for(unsigned int row = 0; row < matrixHeight; ++row){
             for(unsigned int col = 0; col < matrixWidth; ++col){

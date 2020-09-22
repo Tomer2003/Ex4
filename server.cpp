@@ -4,7 +4,7 @@ std::mutex clients_vector_mutex;
 
 namespace server_side{
 
-    Server::Server(const unsigned int port, const client_operations::ClientHandler &clientHandler) noexcept : m_port(port), m_clientHandler(clientHandler), m_fileDescriptor(0) {    }
+    Server::Server(const unsigned int port, client_operations::ClientHandler &clientHandler) noexcept : m_port(port), m_clientHandler(clientHandler), m_fileDescriptor(0) {    }
 
     void Server::setFileDescriptor(const int fileDescriptor){
         this->m_fileDescriptor = fileDescriptor;
@@ -14,7 +14,7 @@ namespace server_side{
         return m_fileDescriptor;
     }
 
-    const client_operations::ClientHandler& Server::getClientHandler() const{
+    client_operations::ClientHandler& Server::getClientHandler() {
         return m_clientHandler;
     }
 
@@ -35,7 +35,7 @@ namespace server_side{
        return address;
     }
 
-    ParallelServer::ParallelServer(const unsigned int port, const client_operations::ClientHandler &clientHandler) noexcept : Server(port, clientHandler) {
+    ParallelServer::ParallelServer(const unsigned int port,  client_operations::ClientHandler &clientHandler) noexcept : Server(port, clientHandler) {
         for(int i = 0; i < THREAD_POOL_SIZE; ++i){
             std::thread thread(&ParallelServer::handleClientConnection, this);
             m_threadPoolVector.push_back(std::move(thread));

@@ -16,7 +16,7 @@ namespace server_side{
     class Server{
     private:
         const unsigned int m_port;
-        const client_operations::ClientHandler &m_clientHandler;
+        client_operations::ClientHandler &m_clientHandler;
         int m_fileDescriptor;
 
     public:
@@ -26,7 +26,7 @@ namespace server_side{
          * @param port - port to listen.
          * @param clientHandler - deal with type of message.
          */
-        Server(const unsigned int port, const client_operations::ClientHandler &clientHandler) noexcept;
+        Server(const unsigned int port,  client_operations::ClientHandler &clientHandler) noexcept;
 
         /**
          * @brief The function open the server and listen for clients.
@@ -67,7 +67,7 @@ namespace server_side{
          * 
          * @return const client_operations::ClientHandler& - client handler. 
          */
-        const client_operations::ClientHandler& getClientHandler() const;
+        client_operations::ClientHandler& getClientHandler();
     };
 
 
@@ -82,7 +82,7 @@ namespace server_side{
          * @param port - port to listen.
          * @param clientHandler - deal with type of message.
          */
-        ParallelServer(const unsigned int port, const client_operations::ClientHandler &clientHandler) noexcept;
+        ParallelServer(const unsigned int port,  client_operations::ClientHandler &clientHandler) noexcept;
 
         /**
          * @brief The function open the server and listen for clients.

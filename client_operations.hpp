@@ -19,7 +19,7 @@ namespace client_operations{
          * @param clientFielDescriptor - client file descriptor
          * @param serverFileDescriptor - server file descriptor
          */
-        virtual void handleClient(const int clientFielDescriptor, const int serverFileDescriptor) const = 0;
+        virtual void handleClient(const int clientFielDescriptor, const int serverFileDescriptor) = 0;
 
         /**
          * @brief The function send error message to client and close the socket.
@@ -42,7 +42,7 @@ namespace client_operations{
          * @param clientFielDescriptor - client file descriptor
          * @param serverFileDescriptor - server file descriptor
          */
-        void handleClient(const int clientFielDescriptor, const int serverFileDescriptor) const;   
+        void handleClient(const int clientFielDescriptor, const int serverFileDescriptor);   
 
         /**
          * @brief The function handle with define problem part in the grapth path handler protocol
@@ -50,7 +50,7 @@ namespace client_operations{
          * @param clientFielDescriptor - client file descriptor
          * @param serverFileDescriptor - server file descriptor
         */
-        void defineProblemMessageHandler(const int clientFielDescriptor, const int serverFileDescriptor) const;
+        std::string defineProblemMessageHandler(const int clientFielDescriptor, const int serverFileDescriptor) const;
 
          /**
          * @brief The function handle with problem part in the grapth path handler protocol
@@ -58,7 +58,7 @@ namespace client_operations{
          * @param clientFielDescriptor - client file descriptor
          * @param serverFileDescriptor - server file descriptor
          */
-        void dataProblemHandler(const int clientFielDescriptor, const int serverFileDescriptor) const;
+        void dataProblemHandler(const int clientFielDescriptor, const int serverFileDescriptor, const std::string& algorithm) ;
 
         /**
          * @brief The function send error message to client and close the socket.
@@ -93,6 +93,17 @@ namespace client_operations{
          * @return false - the string is not integer
          */
         static bool isInteger(const std::string& string);
+
+        static unsigned int getIndexOccurences(std::string string, const char ch, const int occurrence);
+
+        /**
+         * @brief The functoin return solution of spesific algorithm
+         * 
+         * @param searchable - searchable object
+         * @param algorithm - algorithm
+         * @return solver_tasks::Solution<solver_tasks::PointNode>& 
+         */
+        solver_tasks::Solution<solver_tasks::PointNode> getFactorAlgorithmSolution(solver_tasks::MatrixGraphPath& searchable, const std::string& algorithm);
     };
 
 }

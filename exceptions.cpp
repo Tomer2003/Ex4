@@ -41,6 +41,12 @@ namespace exceptions{
     ServerOpenSocketException::ServerOpenSocketException() noexcept : Exception(STATUS_SERVER_OPEN_SOCKET_EXCEPTION){}
 
     ServerAcceptException::ServerAcceptException() noexcept : Exception(STATUS_SERVER_ACCEPT_EXCEPTION){}
+
+    MatrixSizesException::MatrixSizesException() noexcept : Exception(STATUS_MATRIX_SIZES_EXCEPTION){}
+
+    MatrixEnterPointException::MatrixEnterPointException() noexcept : Exception(STATUS_MATRIX_ENTER_POINT_EXCEPTION){}
+
+    MatrixExitPointException::MatrixExitPointException() noexcept : Exception(STATUS_MATRIX_EXIT_POINT_EXCEPTION){}
 }
 
 
