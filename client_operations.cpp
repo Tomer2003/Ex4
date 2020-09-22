@@ -23,7 +23,10 @@ namespace client_operations{
         string.erase(0, 1);
       }
     }
-    
+
+    bool isInteger(const std::string& string){
+      return string.find_first_not_of("0123456789") == std::string::npos;
+    }
 
     void GraphPathHandler::handleException(int clientFileDescriptor, exceptions::Exception& exceptoin) const{
       std::string errorMessage = "Version: 1.0\r\nstatus: " + std::to_string(exceptoin.getStatus()) + "\r\nresponse-length: 0\r\n\r\n";
@@ -69,6 +72,27 @@ namespace client_operations{
       std::string succesMessage = "Version: 1.0\r\nstatus: 0\r\nresponse-length: 0\r\n\r\n";
       exceptions::serverErrorCheck(write(clientFielDescriptor, (void*)(succesMessage.data()), static_cast<unsigned int>(succesMessage.size())), STATUS_SERVER_WRITE_READ_EXCEPTION);
     
+    }
+
+    void GraphPathHandler::dataProblemHandler(const int clientFielDescriptor, const int serverFileDescriptor) const{
+      int a = serverFileDescriptor;
+      a++;//delete
+      std::string operationDataMessage(BYTES_TO_READ_PER_STREAM, '\0');
+      exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDataMessage.data(), BYTES_TO_READ_PER_STREAM), STATUS_SERVER_WRITE_READ_EXCEPTION);
+      operationDataMessage.erase(std::remove(operationDataMessage.begin(), operationDataMessage.end(), ' '), operationDataMessage.end());
+      auto matrixDefenitionSizes = operationDataMessage.substr(0, operationDataMessage.find('\n'));
+      matrixDefenitionSizes.erase(0, matrixDefenitionSizes.find('\n') + 1);
+      if(matrixDefenitionSizes.find(",") == std::string::npos){
+        //trow exception!
+      }
+      auto height = matrixDefenitionSizes.substr(0, matrixDefenitionSizes.find(","));
+      auto width = matrixDefenitionSizes.substr(matrixDefenitionSizes.find(",") + 1, matrixDefenitionSizes.size());
+      if(!isInteger(width) || !isInteger(height)){
+        //throw exception!
+      }
+      matrix::Matrix matrix(std::stoi(height), std::stoi(width));
+
+
     }
 
     void GraphPathHandler::handleClient(const int clientFielDescriptor, const int serverFileDescriptor) const{

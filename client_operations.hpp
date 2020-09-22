@@ -49,10 +49,16 @@ namespace client_operations{
          * 
          * @param clientFielDescriptor - client file descriptor
          * @param serverFileDescriptor - server file descriptor
-         * @return true - the definition succeed
-         * @return false - the definition failed
-         */
+        */
         void defineProblemMessageHandler(const int clientFielDescriptor, const int serverFileDescriptor) const;
+
+         /**
+         * @brief The function handle with problem part in the grapth path handler protocol
+         * 
+         * @param clientFielDescriptor - client file descriptor
+         * @param serverFileDescriptor - server file descriptor
+         */
+        void dataProblemHandler(const int clientFielDescriptor, const int serverFileDescriptor) const;
 
         /**
          * @brief The function send error message to client and close the socket.
@@ -78,6 +84,15 @@ namespace client_operations{
          * @param string - string to remove multiply spaces or tabs
          */
         static void getMessageWithoutMultipleSpaces(std::string& string);
+
+        /**
+         * @brief The function check if the string is integer
+         * 
+         * @param string - string
+         * @return true - the string is integer
+         * @return false - the string is not integer
+         */
+        static bool isInteger(const std::string& string);
     };
 
 }
