@@ -6,15 +6,6 @@ namespace server_side{
 
     Server::Server(const unsigned int port, const client_operations::ClientHandler &clientHandler) noexcept : m_port(port), m_clientHandler(clientHandler), m_fileDescriptor(0) {    }
 
-    void Server::errorCheck(const int returnValue) const {
-        if(returnValue < 0){
-            //throw exceptoins
-            std::cout << "error!" << std::endl;
-            close(m_fileDescriptor);
-            exit(1);
-        }
-    }
-
     void Server::setFileDescriptor(const int fileDescriptor){
         this->m_fileDescriptor = fileDescriptor;
     }
@@ -29,7 +20,7 @@ namespace server_side{
 
     sockaddr_in Server::createFileDescriptor(){
         int fileDescriptor;
-        errorCheck(fileDescriptor = socket(AF_INET, SOCK_STREAM, 0));
+        exceptions::serverErrorCheck(fileDescriptor = socket(AF_INET, SOCK_STREAM, 0), m_fileDescriptor);
         setFileDescriptor(fileDescriptor);
 
        sockaddr_in address;
@@ -37,9 +28,9 @@ namespace server_side{
        address.sin_port = htons(m_port);
        address.sin_addr.s_addr = INADDR_ANY;
 
-       errorCheck(bind(fileDescriptor, reinterpret_cast<sockaddr*>(&address), sizeof(sockaddr)));
+       exceptions::serverErrorCheck(bind(fileDescriptor, reinterpret_cast<sockaddr*>(&address), sizeof(sockaddr)), m_fileDescriptor);
 
-       errorCheck(listen(fileDescriptor, BACK_LOGS_NUM));
+       exceptions::serverErrorCheck(listen(fileDescriptor, BACK_LOGS_NUM), m_fileDescriptor);
 
        return address;
     }
@@ -56,7 +47,7 @@ namespace server_side{
         std::cout << "waits for accepts: " << std::endl;
         while(true){
             int socketNum;
-            errorCheck(socketNum = accept(getFileDescriptor(), reinterpret_cast<sockaddr*>(&address), (socklen_t*)&addressLen));
+            exceptions::serverErrorCheck(socketNum = accept(getFileDescriptor(), reinterpret_cast<sockaddr*>(&address), (socklen_t*)&addressLen), getFileDescriptor());
             std::cout << "accept!" << std::endl;
             clients_vector_mutex.lock();
             m_clients.push_back(socketNum);
@@ -74,7 +65,7 @@ namespace server_side{
                 client = m_clients[0];
                 m_clients.erase(m_clients.begin());
                 clients_vector_mutex.unlock();
-                getClientHandler().handleClient(client);
+                getClientHandler().handleClient(client, getFileDescriptor());
             }
             else{
                 clients_vector_mutex.unlock();

@@ -1,4 +1,7 @@
+#pragma once
+
 #include "solver_tasks.hpp"
+#include "exceptions.hpp"
 #include <iostream>
 #include <algorithm>
 #include <unistd.h>
@@ -11,7 +14,7 @@ namespace client_operations{
     public:
        
 
-        virtual void handleClient(const int clientFielDescriptor) const = 0;
+        virtual void handleClient(const int clientFielDescriptor, const int serverFileDescriptor) const = 0;
 
     };
 
@@ -20,7 +23,7 @@ namespace client_operations{
 
     public:
 
-        void handleClient(const int clientFielDescriptor) const;   
+        void handleClient(const int clientFielDescriptor, const int serverFileDescriptor) const;   
 
       /*  static solver_tasks::Solution algorithmFactory(const std::string& algorithm){
             if(algorithm == "DFS"){

@@ -101,18 +101,18 @@ namespace matrix{
         content.erase(std::remove(content.begin(), content.end(), '\t'), content.end());
         content.erase(std::remove(content.begin(), content.end(), '\r'), content.end());
         auto matrixWidth = std::count(content.begin(), content.begin() + content.find("\n"), ',') + 1;
-
+        std::cout << "width = " << matrixWidth << std::endl; 
         std::replace(content.begin(), content.end(), '\n', ',');
         std::replace(content.begin(), content.end(), ',', ' ');
-        std::vector<unsigned int> valuesArr;
+        std::vector<double> valuesArr;
         std::stringstream stringStreamContent(content);
-        unsigned int temp;
+        double temp;
         while (stringStreamContent >> temp){
             valuesArr.push_back(temp);
         }
 
         auto matrixHeight = valuesArr.size() / matrixWidth;
-
+        std::cout << "height = " << matrixHeight << std::endl;
         matrix::Matrix matrix(matrixHeight, matrixWidth);
         for(unsigned int row = 0; row < matrixHeight; ++row){
             for(unsigned int col = 0; col < matrixWidth; ++col){

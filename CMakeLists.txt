@@ -19,7 +19,7 @@ include_directories(matrix)
 #   in these directories. We want libmatrix.so which is under 
 #the matrix directory. Note that a full path is required.
 link_directories(matrix)
-add_executable(tester main.cpp server.cpp client_operations.cpp solver_tasks.cpp matrix/MatrixExceptions.cpp matrix/ClassMatrix.cpp) 
+add_executable(tester main.cpp exceptions.cpp  server.cpp client_operations.cpp solver_tasks.cpp matrix/MatrixExceptions.cpp matrix/ClassMatrix.cpp) 
 # Links out executable with matrix. ld (the linker) will automatically
 #   add the 'lib' prefix and 'so' suffix, which will result in libmatrix.so
 target_link_libraries(tester matrix)

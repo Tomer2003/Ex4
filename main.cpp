@@ -5,13 +5,13 @@ int main(){
     server_side::ParallelServer server(8086, clientHandle);
     server.open();
 */
-    matrix::Matrix matrix(2, 2);
+    matrix::Matrix matrix(3, 3);
     matrix = matrix::Matrix::getMatrixFromFile("../matrix/matrix2.txt");
     matrix.printMatrix();
 
-    solver_tasks::MatrixGraphPath BFSsearchable(matrix, solver_tasks::PointNode(0, 0, 0, 0), solver_tasks::PointNode(1, 1, 0, 0));
-    solver_tasks::MatrixGraphPath DFSsearchable(matrix, solver_tasks::PointNode(0, 0, 0,0 ), solver_tasks::PointNode(1, 1, 0, 0));
-    solver_tasks::MatrixGraphPath ASTARsearchable(matrix, solver_tasks::PointNode(0, 0, 0,0), solver_tasks::PointNode(1, 1, 0,0 ));
+    solver_tasks::MatrixGraphPath BFSsearchable(matrix, solver_tasks::PointNode(0, 0, 0, 0), solver_tasks::PointNode(2, 2, 0, 0));
+    solver_tasks::MatrixGraphPath DFSsearchable(matrix, solver_tasks::PointNode(0, 0, 0,0 ), solver_tasks::PointNode(2, 2, 0, 0));
+    solver_tasks::MatrixGraphPath ASTARsearchable(matrix, solver_tasks::PointNode(0, 0, 0,0), solver_tasks::PointNode(2, 2, 0,0 ));
     solver_tasks::BreadthFirstSearch<solver_tasks::PointNode> BFSsearcher;
     solver_tasks::DepthFirstSearch<solver_tasks::PointNode> DFSsearcher;
     solver_tasks::AStar<solver_tasks::PointNode> ASTARsearcher;

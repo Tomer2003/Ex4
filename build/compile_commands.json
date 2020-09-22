@@ -6,6 +6,11 @@
 },
 {
   "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
+  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/tester.dir/exceptions.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/exceptions.cpp\"",
+  "file": "/home/tomer/Advanced Programmin 1/Ex4/exceptions.cpp"
+},
+{
+  "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
   "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/tester.dir/server.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/server.cpp\"",
   "file": "/home/tomer/Advanced Programmin 1/Ex4/server.cpp"
 },

@@ -24,9 +24,9 @@ namespace client_operations{
       }
     }
     
-    void GraphPathHandler::handleClient(const int clientFielDescriptor) const{
+    void GraphPathHandler::handleClient(const int clientFielDescriptor, const int serverFileDescriptor) const{
       std::string operationDefineMessage(BYTES_TO_READ_PER_STREAM, '\0');
-
+      exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDefineMessage.data(), BYTES_TO_READ_PER_STREAM), serverFileDescriptor);
     /*  //check if the server waits more than 5 seconds to client message
       bool clientSendMessage = false;
       bool stopClientConnection = false;

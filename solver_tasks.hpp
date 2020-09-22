@@ -1,3 +1,5 @@
+#pragma once
+
 #include "matrix/ClassMatrix.hpp"
 #include <string>
 #include <vector>

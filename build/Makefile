@@ -547,6 +547,33 @@ client_operations.cpp.s:
 	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/client_operations.cpp.s
 .PHONY : client_operations.cpp.s
 
+exceptions.o: exceptions.cpp.o
+
+.PHONY : exceptions.o
+
+# target to build an object file
+exceptions.cpp.o:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/exceptions.cpp.o
+.PHONY : exceptions.cpp.o
+
+exceptions.i: exceptions.cpp.i
+
+.PHONY : exceptions.i
+
+# target to preprocess a source file
+exceptions.cpp.i:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/exceptions.cpp.i
+.PHONY : exceptions.cpp.i
+
+exceptions.s: exceptions.cpp.s
+
+.PHONY : exceptions.s
+
+# target to generate assembly for a file
+exceptions.cpp.s:
+	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/exceptions.cpp.s
+.PHONY : exceptions.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -725,6 +752,9 @@ help:
 	@echo "... client_operations.o"
 	@echo "... client_operations.i"
 	@echo "... client_operations.s"
+	@echo "... exceptions.o"
+	@echo "... exceptions.i"
+	@echo "... exceptions.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

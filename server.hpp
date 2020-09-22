@@ -1,4 +1,7 @@
+#pragma once
+
 #include "client_operations.hpp"
+#include "exceptions.hpp"
 #include <sys/socket.h>
 #include <thread>
 #include <netinet/in.h> 
@@ -37,13 +40,6 @@ namespace server_side{
          */
         virtual void stop() const = 0;
 
-        /**
-         * @brief The function check errors and throw appopriate exception if should.
-         * 
-         * @param returnValue - return value of function.
-         * @param socketFileDescriptor - file descriptor of sock.
-         */
-        void errorCheck(const int returnValue) const;
 
        /**
         * @brief The function create a file descriptor of tcp socket with appopriate parameters.
@@ -107,6 +103,10 @@ namespace server_side{
         */
         void acceptClients(sockaddr_in addres);
 
+        /**
+         * @brief The function handle with each client according ClientHandler object.
+         * 
+         */
         void handleClientConnection();
     };
 }

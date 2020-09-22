@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/tester.dir/client_operations.cpp.o"
+  "CMakeFiles/tester.dir/exceptions.cpp.o"
   "CMakeFiles/tester.dir/main.cpp.o"
   "CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o"
   "CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.o"
