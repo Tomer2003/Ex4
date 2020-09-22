@@ -19,7 +19,8 @@ int main(){
     std::cout << BFSsolution.getSolution() << std::endl;
     std::cout << DFSsolution.getSolution() << std::endl;
     std::cout << ASTARsolution.getSolution() << std::endl;
-    */client_operations::GraphPathHandler clientHandle;
+    */
+    client_operations::GraphPathHandler clientHandle;
     server_side::ParallelServer server(8086, clientHandle);
     server.open();
 

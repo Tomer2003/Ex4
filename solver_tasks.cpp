@@ -60,7 +60,7 @@ namespace solver_tasks{
             }
         }
         //throw exception(no initial state)
-        std::cout << "error!" << std::endl;
+        std::cout << "error!a" << std::endl;
         exit(1);
     }
 
@@ -71,7 +71,7 @@ namespace solver_tasks{
             }
         }
         //throw exception(no initial state)
-        std::cout << "error!" << std::endl;
+        std::cout << "error!b" << std::endl;
         exit(1);
     }
 

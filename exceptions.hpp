@@ -13,7 +13,7 @@
 #define STATUS_MATRIX_ENTER_POINT_EXCEPTION 9
 #define STATUS_MATRIX_EXIT_POINT_EXCEPTION 10
 namespace exceptions{
-    void serverErrorCheck(const int returnValue, int const status);
+    void serverErrorCheck(const int returnValue, int const status, const int serverFileDescriptor);
 
     class Exception{
         private:

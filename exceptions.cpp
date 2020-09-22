@@ -1,7 +1,8 @@
 #include "exceptions.hpp"
 namespace exceptions{
-    void serverErrorCheck(const int returnValue, int const status){
+    void serverErrorCheck(const int returnValue, int const status, const int serverFileDescriptor){
         if(returnValue < 0){
+            close(serverFileDescriptor);
            switch (status)
            {
             case STATUS_SERVER_WRITE_READ_EXCEPTION:

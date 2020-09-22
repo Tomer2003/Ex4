@@ -50,6 +50,10 @@
         "thread": "cpp",
         "condition_variable": "cpp",
         "mutex": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "bitset": "cpp",
+        "cstring": "cpp",
+        "regex": "cpp",
+        "shared_mutex": "cpp"
     }
 }

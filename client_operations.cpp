@@ -26,8 +26,18 @@ namespace client_operations{
         solver_tasks::DepthFirstSearch<solver_tasks::PointNode> DFSsearcher;
         return DFSsearcher.search(searchable);
       }
-      throw "2";
+      throw -1;
     }
+
+    void GraphPathHandler::replaceAll(std::string& str, const std::string& from, const std::string& to) {
+            if(from.empty())
+                return;
+            size_t start_pos = 0;
+            while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+                str.replace(start_pos, from.length(), to);
+                start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+            }
+      }
 
     void GraphPathHandler::getMessageWithoutMultipleSpaces(std::string& string){
       std::replace(string.begin(), string.end(), '\t', ' ');
@@ -47,10 +57,8 @@ namespace client_operations{
     unsigned int GraphPathHandler::getIndexOccurences(std::string string, const char ch, const int occurrence) {
       int index = 0;
       for (int i = 0; i < occurrence; i++) {
-        std::cout << string.find(ch) << std::endl;
         index += string.find(ch) + 1;
         string.erase(0, string.find(ch) + 1);
-        std::cout << string << std::endl;
       }
       return index - 1;
     }
@@ -62,10 +70,8 @@ namespace client_operations{
     }
 
     std::string GraphPathHandler::defineProblemMessageHandler(const int clientFielDescriptor, const int serverFileDescriptor) const{
-      int a = serverFileDescriptor;
-      a++;//delete
       std::string operationDefineMessage(BYTES_TO_READ_PER_STREAM, '\0');
-      exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDefineMessage.data(), BYTES_TO_READ_PER_STREAM), STATUS_SERVER_WRITE_READ_EXCEPTION);
+      exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDefineMessage.data(), BYTES_TO_READ_PER_STREAM), STATUS_SERVER_WRITE_READ_EXCEPTION, serverFileDescriptor);
     /*  //check if the server waits more than 5 seconds to client message
       bool clientSendMessage = false;
       bool stopClientConnection = false;
@@ -97,18 +103,16 @@ namespace client_operations{
       }
 
       std::string succesMessage = "Version: 1.0\r\nstatus: 0\r\nresponse-length: 0\r\n\r\n";
-      exceptions::serverErrorCheck(write(clientFielDescriptor, (void*)(succesMessage.data()), static_cast<unsigned int>(succesMessage.size())), STATUS_SERVER_WRITE_READ_EXCEPTION);
+      exceptions::serverErrorCheck(write(clientFielDescriptor, (void*)(succesMessage.data()), static_cast<unsigned int>(succesMessage.size())), STATUS_SERVER_WRITE_READ_EXCEPTION, serverFileDescriptor);
       return algorithm;
     }
 
     void GraphPathHandler::dataProblemHandler(const int clientFielDescriptor, const int serverFileDescriptor, const std::string& algorithm) {
-      int a = serverFileDescriptor;
-      a++;//delete
       std::string operationDataMessage(BYTES_TO_READ_PER_STREAM, '\0');
-      exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDataMessage.data(), BYTES_TO_READ_PER_STREAM), STATUS_SERVER_WRITE_READ_EXCEPTION);
+      exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDataMessage.data(), BYTES_TO_READ_PER_STREAM), STATUS_SERVER_WRITE_READ_EXCEPTION, serverFileDescriptor);
       operationDataMessage.erase(std::remove(operationDataMessage.begin(), operationDataMessage.end(), ' '), operationDataMessage.end());
       auto matrixDefenitionSizes = operationDataMessage.substr(0, operationDataMessage.find('\n'));
-      matrixDefenitionSizes.erase(0, matrixDefenitionSizes.find('\n') + 1);
+      operationDataMessage.erase(0, operationDataMessage.find('\n') + 1);
       if(matrixDefenitionSizes.find(",") == std::string::npos){
         exceptions::MatrixSizesException();
       }
@@ -118,14 +122,16 @@ namespace client_operations{
         exceptions::MatrixSizesException();
       }
 
+
       matrix::Matrix matrix(std::stoi(height), std::stoi(width));
 
       std::string matrixString = operationDataMessage.substr(0, getIndexOccurences(operationDataMessage, '\n', std::stoi(height)));
+      replaceAll(matrixString, "b", "-1");
       matrix = matrix::Matrix::getMatrixFromString(matrixString);
       operationDataMessage.erase(0, getIndexOccurences(operationDataMessage, '\n', std::stoi(height)) + 1);
 
       auto matrixEnter = operationDataMessage.substr(0, operationDataMessage.find('\n'));
-      matrixEnter.erase(0, matrixEnter.find('\n') + 1);
+      operationDataMessage.erase(0, operationDataMessage.find('\n') + 1);
       if(matrixDefenitionSizes.find(",") == std::string::npos){
         exceptions::MatrixEnterPointException();
       }
@@ -137,7 +143,7 @@ namespace client_operations{
       auto enterMatrixPoint = solver_tasks::PointNode(std::stoi(rowCoordinateEnter), std::stoi(columnCoordinateEnter), 0, 0);
 
       auto matrixExit = operationDataMessage.substr(0, operationDataMessage.find('\n'));
-      matrixExit.erase(0, matrixExit.find('\n') + 1);
+      operationDataMessage.erase(0, operationDataMessage.find('\n') + 1);
       if(matrixDefenitionSizes.find(",") == std::string::npos){
         exceptions::MatrixExitPointException();
       }

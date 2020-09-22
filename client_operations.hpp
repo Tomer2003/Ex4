@@ -94,7 +94,24 @@ namespace client_operations{
          */
         static bool isInteger(const std::string& string);
 
+        /**
+         * @brief The function return index of spesific occurence of char
+         * 
+         * @param string - string
+         * @param ch - char
+         * @param occurrence - occurrence
+         * @return unsigned int - index
+         */
         static unsigned int getIndexOccurences(std::string string, const char ch, const int occurrence);
+        
+        /**
+         * @brief The function replace part of string to another string
+         * 
+         * @param str - string
+         * @param from - part to replace
+         * @param to - replacing part
+         */
+        static void replaceAll(std::string& str, const std::string& from, const std::string& to);
 
         /**
          * @brief The functoin return solution of spesific algorithm
