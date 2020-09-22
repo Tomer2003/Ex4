@@ -81,10 +81,50 @@ namespace solver_tasks{
                 return state;
             }
         }
-        //throw exception
-        exit(1);
+        throw NO_PASSAGE_NODE;
     }
 
+
+    double MatrixGraphPath::getYCoordinateOfUpperNode(const unsigned int row, const unsigned int column){
+        bool exception = true;
+        double yCoordinateUpperNode;
+        unsigned int upper = 1;
+        while(exception){
+            try{
+                if(static_cast<int>(row - upper) <  0){
+                    yCoordinateUpperNode = 0;
+                    exception = false;
+                } else{
+                    yCoordinateUpperNode = getState(row - upper, column).getNode().getYCoordinate();
+                    exception = false;
+                }
+            } catch(int noPassageNode){
+                upper++;
+            }
+        }
+        return yCoordinateUpperNode;
+    }
+
+    double MatrixGraphPath::getXCoordinateOfLeffterNode(const unsigned int row, const unsigned int column){
+        bool exception = true;
+        double xCoordinateRightNode;
+        unsigned int lefter = 1;
+        while(exception){
+            try{
+                if(static_cast<int>(column - lefter) < 0){
+                    xCoordinateRightNode = 0;
+                    exception = false;
+                } else{
+                    State<PointNode>& state = getState(row, column - 1);
+                    xCoordinateRightNode = state.getNode().getXCoordinate();
+                    exception = false;
+                }
+            } catch(int noPassageNode){
+                lefter++;
+            }
+        }
+        return xCoordinateRightNode;
+    }
 
     void MatrixGraphPath::setStatesOfMatrix(){
         for(unsigned int row = 0; row < m_matrixGraph.matrixGetWidth(); ++row){
@@ -94,10 +134,10 @@ namespace solver_tasks{
                         getStatesVector().push_back(State<PointNode>(PointNode(row, column, 0, 0), m_matrixGraph(row, column)));
                     }
                     else if(column == 0){
-                        getStatesVector().push_back(State<PointNode>(PointNode(row, column, m_matrixGraph(row, column) + getState(row - 1, column).getNode().getYCoordinate(), 0), m_matrixGraph(row, column)));
+                        getStatesVector().push_back(State<PointNode>(PointNode(row, column, m_matrixGraph(row, column) + getYCoordinateOfUpperNode(row, column), 0), m_matrixGraph(row, column)));
                     }
                     else{
-                        getStatesVector().push_back(State<PointNode>(PointNode(row, column, getState(row, column - 1).getNode().getYCoordinate(), m_matrixGraph(row, column) + getState(row, column - 1).getNode().getXCoordinate()), m_matrixGraph(row, column)));
+                        getStatesVector().push_back(State<PointNode>(PointNode(row, column, getYCoordinateOfUpperNode(row, column), m_matrixGraph(row, column) + getXCoordinateOfLeffterNode(row, column)), m_matrixGraph(row, column)));
                     }
                 }
             }

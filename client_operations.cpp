@@ -24,9 +24,18 @@ namespace client_operations{
       }
     }
     
-    void GraphPathHandler::handleClient(const int clientFielDescriptor, const int serverFileDescriptor) const{
+
+    void GraphPathHandler::handleException(int clientFileDescriptor, exceptions::Exception& exceptoin) const{
+      std::string errorMessage = "Version: 1.0\r\nstatus: " + std::to_string(exceptoin.getStatus()) + "\r\nresponse-length: 0\r\n\r\n";
+      write(clientFileDescriptor, (void*)errorMessage.data(), static_cast<unsigned int>(errorMessage.size()));
+      close(clientFileDescriptor);
+    }
+
+    void GraphPathHandler::defineProblemMessageHandler(const int clientFielDescriptor, const int serverFileDescriptor) const{
+      int a = serverFileDescriptor;
+      a++;//delete
       std::string operationDefineMessage(BYTES_TO_READ_PER_STREAM, '\0');
-      exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDefineMessage.data(), BYTES_TO_READ_PER_STREAM), serverFileDescriptor);
+      exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDefineMessage.data(), BYTES_TO_READ_PER_STREAM), STATUS_SERVER_WRITE_READ_EXCEPTION);
     /*  //check if the server waits more than 5 seconds to client message
       bool clientSendMessage = false;
       bool stopClientConnection = false;
@@ -51,15 +60,24 @@ namespace client_operations{
       auto algorithm = operationDefineMessage.substr(0, operationDefineMessage.find("\r\n"));
       operationDefineMessage.erase(0, operationDefineMessage.find("\r\n"));
       
-      if(operationDefineMessage.substr(0, 4) != "\r\n\r\n" || operation != "solve" || problem != "find-graph-path"){
-        close(clientFielDescriptor);
-        std::cout << "error!: " << operation << " " << problem << " " << algorithm << std::endl;
-        //throw exception!
+      if(operationDefineMessage.substr(0, 4) != "\r\n\r\n" || operation != "solve" || problem != "find-graph-path"
+      || (algorithm != "A*" && algorithm != "BFS" && algorithm != "DFS")){
+        throw exceptions::DefenitionProblemMessageException();
+        
       }
 
-      std::cout << operation << " " << problem << " " << algorithm << std::endl;      
-      close(clientFielDescriptor);
-      
+      std::string succesMessage = "Version: 1.0\r\nstatus: 0\r\nresponse-length: 0\r\n\r\n";
+      exceptions::serverErrorCheck(write(clientFielDescriptor, (void*)(succesMessage.data()), static_cast<unsigned int>(succesMessage.size())), STATUS_SERVER_WRITE_READ_EXCEPTION);
+    
+    }
+
+    void GraphPathHandler::handleClient(const int clientFielDescriptor, const int serverFileDescriptor) const{
+      try{
+        defineProblemMessageHandler(clientFielDescriptor, serverFileDescriptor);
+        close(clientFielDescriptor);
+      } catch (exceptions::Exception& exception){
+        handleException(clientFielDescriptor, exception);
+      }
 
     }
 

@@ -20,7 +20,7 @@ namespace server_side{
 
     sockaddr_in Server::createFileDescriptor(){
         int fileDescriptor;
-        exceptions::serverErrorCheck(fileDescriptor = socket(AF_INET, SOCK_STREAM, 0), m_fileDescriptor);
+        exceptions::serverErrorCheck(fileDescriptor = socket(AF_INET, SOCK_STREAM, 0), STATUS_SERVER_OPEN_SOCKET_EXCEPTION);
         setFileDescriptor(fileDescriptor);
 
        sockaddr_in address;
@@ -28,9 +28,9 @@ namespace server_side{
        address.sin_port = htons(m_port);
        address.sin_addr.s_addr = INADDR_ANY;
 
-       exceptions::serverErrorCheck(bind(fileDescriptor, reinterpret_cast<sockaddr*>(&address), sizeof(sockaddr)), m_fileDescriptor);
+       exceptions::serverErrorCheck(bind(fileDescriptor, reinterpret_cast<sockaddr*>(&address), sizeof(sockaddr)), STATUS_SERVER_BIND_EXCEPTION);
 
-       exceptions::serverErrorCheck(listen(fileDescriptor, BACK_LOGS_NUM), m_fileDescriptor);
+       exceptions::serverErrorCheck(listen(fileDescriptor, BACK_LOGS_NUM), STATUS_SERVER_LISTEN_EXCEPRION);
 
        return address;
     }
@@ -47,7 +47,7 @@ namespace server_side{
         std::cout << "waits for accepts: " << std::endl;
         while(true){
             int socketNum;
-            exceptions::serverErrorCheck(socketNum = accept(getFileDescriptor(), reinterpret_cast<sockaddr*>(&address), (socklen_t*)&addressLen), getFileDescriptor());
+            exceptions::serverErrorCheck(socketNum = accept(getFileDescriptor(), reinterpret_cast<sockaddr*>(&address), (socklen_t*)&addressLen), STATUS_SERVER_ACCEPT_EXCEPTION);
             std::cout << "accept!" << std::endl;
             clients_vector_mutex.lock();
             m_clients.push_back(socketNum);

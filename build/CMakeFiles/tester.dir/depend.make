@@ -40,6 +40,7 @@ CMakeFiles/tester.dir/server.cpp.o: ../server.cpp
 CMakeFiles/tester.dir/server.cpp.o: ../server.hpp
 CMakeFiles/tester.dir/server.cpp.o: ../solver_tasks.hpp
 
+CMakeFiles/tester.dir/solver_tasks.cpp.o: ../exceptions.hpp
 CMakeFiles/tester.dir/solver_tasks.cpp.o: ../matrix/ClassMatrix.hpp
 CMakeFiles/tester.dir/solver_tasks.cpp.o: ../matrix/ErrorCode.h
 CMakeFiles/tester.dir/solver_tasks.cpp.o: ../matrix/Matrix.h

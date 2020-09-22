@@ -1,6 +1,7 @@
 #pragma once
 
 #include "matrix/ClassMatrix.hpp"
+#include "exceptions.hpp"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -9,7 +10,6 @@
 #include <cmath>
 #include <map>
 
-//#define INFINITY_COST -1
 
 namespace solver_tasks{
 
@@ -311,9 +311,32 @@ public:
      */
     void setDistanceForStatesToGoalState();
 
+    /**
+     * @brief The function return state according row and column of matrix
+     * 
+     * @param row - row
+     * @param column - column
+     * @return State<PointNode>& - state 
+     */
     State<PointNode>& getState(const unsigned int row, const unsigned int column);
-        
+    
+    /**
+     * @brief The function return x coordinate of leffetr node in matrix
+     * 
+     * @param row - row 
+     * @param column - column 
+     * @return double - x coordinate
+     */
+    double getXCoordinateOfLeffterNode(const unsigned int row, const unsigned int column);
 
+    /**
+     * @brief The function return y coordinate of upper node int matrix
+     * 
+     * @param row - row
+     * @param column - column
+     * @return double - y coordinate
+     */
+    double getYCoordinateOfUpperNode(const unsigned int row, const unsigned int column);
 };
 
 template <class Node> class Solution{ 
@@ -346,6 +369,10 @@ public:
      */
     std::string getSolution() const{
         std::string solution;
+        
+        if(m_solutionPathStates.empty()){
+            throw exceptions::MatrixPathNotFound();
+        }
 
         double cost = 0;
         for(State<Node> state : m_solutionPathStates){
