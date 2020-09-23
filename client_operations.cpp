@@ -180,14 +180,21 @@ namespace client_operations{
         exceptions::MatrixExitPointException();
       }
       auto exitMatrixPoint = solver_tasks::PointNode(std::stoi(rowCoordinateExit), std::stoi(columnCoordinateExit), 0, 0);
+     
+      std::string solutionMessage;
+      std::cout << "1: " << exitMatrixPoint.getColumn() << " " << exitMatrixPoint.getRow() << "\n2: " << enterMatrixPoint.getColumn() << " " << enterMatrixPoint.getRow() << std::endl;
+      if(exitMatrixPoint == enterMatrixPoint){
+        std::string solutionPath = "0," + algorithm;
+        solutionMessage = "Version: 1.0\r\nstatus: 0\r\nresponse-length: " + std::to_string(solutionPath.size()) + "\r\n" + solutionPath + "\r\n\r\n";
+      } else {
+        solver_tasks::MatrixGraphPath searchable(matrix, enterMatrixPoint, exitMatrixPoint);
 
-      solver_tasks::MatrixGraphPath searchable(matrix, enterMatrixPoint, exitMatrixPoint);
+        solver_tasks::Solution<solver_tasks::PointNode> solution = getFactorAlgorithmSolution(searchable, algorithm);
 
-      solver_tasks::Solution<solver_tasks::PointNode> solution = getFactorAlgorithmSolution(searchable, algorithm);
-
-      std::string solutionMessage = "Version: 1.0\r\nstatus: 0\r\nresponse-length: " + std::to_string(solution.getSolution().size()) + "\r\n" + solution.getSolution() + "\r\n\r\n";
-
-      exceptions::serverErrorCheck(write(clientFielDescriptor, (void*)solutionMessage.data(), static_cast<unsigned int>(solutionMessage.size())), STATUS_SERVER_WRITE_READ_EXCEPTION, serverFileDescriptor);;
+        solutionMessage = "Version: 1.0\r\nstatus: 0\r\nresponse-length: " + std::to_string(solution.getSolution().size()) + "\r\n" + solution.getSolution() + "\r\n\r\n";
+      }
+      
+      exceptions::serverErrorCheck(write(clientFielDescriptor, (void*)solutionMessage.data(), static_cast<unsigned int>(solutionMessage.size())), STATUS_SERVER_WRITE_READ_EXCEPTION, serverFileDescriptor);
     }
 
     void GraphPathHandler::handleClient(const int clientFielDescriptor, const int serverFileDescriptor) {
