@@ -1,5 +1,5 @@
 #include "server.hpp"
-
+#define NUM_OF_MINUTES_TO_WAITE_FOR_CLIENTS_TO_CLOSE_THE_SERVER 10
 std::mutex clients_vector_mutex;
 
 namespace server_side{
@@ -35,7 +35,7 @@ namespace server_side{
        return address;
     }
 
-    ParallelServer::ParallelServer(const unsigned int port,  client_operations::ClientHandler &clientHandler) noexcept : Server(port, clientHandler) {
+    ParallelServer::ParallelServer(const unsigned int port,  client_operations::ClientHandler &clientHandler) noexcept : Server(port, clientHandler), m_serverStopped(false) {
         for(int i = 0; i < THREAD_POOL_SIZE; ++i){
             std::thread thread(&ParallelServer::handleClientConnection, this);
             m_threadPoolVector.push_back(std::move(thread));
@@ -44,19 +44,29 @@ namespace server_side{
 
     void ParallelServer::acceptClients(sockaddr_in address){
         auto addressLen = sizeof(address);
-        while(true){
+        while(!m_serverStopped.load()){
             int socketNum;
-            exceptions::serverErrorCheck(socketNum = accept(getFileDescriptor(), reinterpret_cast<sockaddr*>(&address), (socklen_t*)&addressLen), STATUS_SERVER_ACCEPT_EXCEPTION, getFileDescriptor());
-            clients_vector_mutex.lock();
-            m_clients.push_back(socketNum);
-            clients_vector_mutex.unlock();
-        }
+            try{
+                socketNum = accept(getFileDescriptor(), reinterpret_cast<sockaddr*>(&address), (socklen_t*)&addressLen);
+                if(socketNum < 0){
+                    throw exceptions::ServerAcceptException();
+                }
+                clients_vector_mutex.lock();
+                m_clients.push_back(socketNum);
+                clients_vector_mutex.unlock();
+            } catch(exceptions::Exception& exception){
+                if(!m_serverStopped.load()){
+                    close(getFileDescriptor());
+                    throw exception;
+                }
+            }
 
+        }
     }
 
     void ParallelServer::handleClientConnection(){
         int client;
-        while(true){
+        while(!m_serverStopped){
             clients_vector_mutex.lock();
             if(!m_clients.empty()){
                 client = m_clients[0];
@@ -72,10 +82,27 @@ namespace server_side{
 
     void ParallelServer::open(){
         sockaddr_in address = createFileDescriptor();
-        acceptClients(address);
+        std::thread clientHandler(&ParallelServer::acceptClients, this, address);
+        stop();
+        for(std::thread& thread : m_threadPoolVector){
+            thread.join();
+        }
+        clientHandler.join();
     }
 
-    void ParallelServer::stop() const{
-
+    void ParallelServer::stop() {
+        while(!m_serverStopped.load()){
+            clients_vector_mutex.lock();
+            if(m_clients.empty()){
+                clients_vector_mutex.unlock();
+                std::this_thread::sleep_for(std::chrono::minutes(NUM_OF_MINUTES_TO_WAITE_FOR_CLIENTS_TO_CLOSE_THE_SERVER));
+                clients_vector_mutex.lock();
+                if(m_clients.empty()){
+                    clients_vector_mutex.unlock();
+                    m_serverStopped.store(true);
+                    shutdown(getFileDescriptor(), SHUT_RDWR);
+                }
+            }
+        }
     }
 }

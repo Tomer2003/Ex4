@@ -2,8 +2,10 @@
 
 #include "solver_tasks.hpp"
 #include "exceptions.hpp"
+#include <ctype.h>
 #include <iostream>
 #include <algorithm>
+#include <atomic>
 #include <unistd.h>
 #include <mutex>
 #include <thread>
@@ -71,12 +73,10 @@ namespace client_operations{
         /**
          * @brief The function stop client connection if the server waits more than 5 seconds to client message
          * 
-         * @param ptrClientSendMessage - if client send message(pointer)
          * @param clientFielDescriptor - client file descriptor
-         * @param stopConnection - if should stop connection(waits more than 5 seconds)
-         * @param mutex - mutex 
+         * @param clientResponse - if client already response
          */
-        void stopConnection(bool* ptrClientSendMessage, const int clientFielDescriptor, bool* stopConnection, std::mutex* mutex) const;
+        void stopConnection(std::atomic<bool>& clientResponse, const int clientFielDescriptor) const;
 
         /**
          * @brief The function return message without multiply spaces or tabs
@@ -112,6 +112,16 @@ namespace client_operations{
          * @param to - replacing part
          */
         static void replaceAll(std::string& str, const std::string& from, const std::string& to);
+
+        /**
+         * @brief The function checks if two string are equal in case sensetive
+         * 
+         * @param string1 - string1
+         * @param string2 - string2
+         * @return true - equals
+         * @return false - not equals
+         */
+        static bool equalsCaseSensetive(const std::string& string1, const std::string& string2);
 
         /**
          * @brief The functoin return solution of spesific algorithm

@@ -5,9 +5,11 @@
 #include <sys/socket.h>
 #include <thread>
 #include <algorithm>
+#include <chrono>
 #include <netinet/in.h> 
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <atomic>
 #include <vector>
 #include <mutex>
 #define BACK_LOGS_NUM 100
@@ -39,7 +41,7 @@ namespace server_side{
          * @brief The function close the server.
          * 
          */
-        virtual void stop() const = 0;
+        virtual void stop() = 0;
 
 
        /**
@@ -76,6 +78,7 @@ namespace server_side{
     private:
         std::vector<std::thread> m_threadPoolVector;
         std::vector<int> m_clients;
+        std::atomic<bool> m_serverStopped;
     public:
         /**
          * @brief Construct a new Serial Server object
@@ -95,7 +98,7 @@ namespace server_side{
          * @brief The function close the server.
          * 
          */
-        void stop() const;
+        void stop();
 
        /**
         * @brief The function accept clients and handle with them.
