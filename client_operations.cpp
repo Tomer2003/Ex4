@@ -3,17 +3,6 @@
 #define MAX_SECONDS_WAITE_FOR_CLIENT_RESPONSE 5
 namespace client_operations{
 
-    
-  /*  void GraphPathHandler::stopConnection(bool* ptrClientSendMessage, const int clientFielDescriptor, bool* stopConnection, std::mutex* mutex) const{
-      std::this_thread::sleep_for(std::chrono::seconds(5));
-      mutex->lock();
-      if(!*ptrClientSendMessage){
-        close(clientFielDescriptor);
-        *stopConnection = true;
-      }
-      mutex->unlock();
-    }
-*/
      bool GraphPathHandler::equalsCaseSensetive(const std::string& a, const std::string& b){
         return std::equal(a.begin(), a.end(), b.begin(),[](char a, char b) {return tolower(a) == tolower(b);});
     }
@@ -27,11 +16,10 @@ namespace client_operations{
         solver_tasks::BreadthFirstSearch<solver_tasks::PointNode> BFSsearcher;
         return BFSsearcher.search(searchable);
       }
-      if(algorithm == "DFS"){
+     else{
         solver_tasks::DepthFirstSearch<solver_tasks::PointNode> DFSsearcher;
         return DFSsearcher.search(searchable);
       }
-      throw -1;
     }
 
     void GraphPathHandler::replaceAll(std::string& str, const std::string& from, const std::string& to) {
@@ -182,7 +170,6 @@ namespace client_operations{
       auto exitMatrixPoint = solver_tasks::PointNode(std::stoi(rowCoordinateExit), std::stoi(columnCoordinateExit), 0, 0);
      
       std::string solutionMessage;
-      std::cout << "1: " << exitMatrixPoint.getColumn() << " " << exitMatrixPoint.getRow() << "\n2: " << enterMatrixPoint.getColumn() << " " << enterMatrixPoint.getRow() << std::endl;
       if(exitMatrixPoint == enterMatrixPoint){
         std::string solutionPath = "0," + algorithm;
         solutionMessage = "Version: 1.0\r\nstatus: 0\r\nresponse-length: " + std::to_string(solutionPath.size()) + "\r\n" + solutionPath + "\r\n\r\n";
@@ -207,11 +194,5 @@ namespace client_operations{
       } catch (exceptions::Exception& exception){
         handleException(clientFielDescriptor, exception);
       }
-
     }
-
-
-
-
-
 }
