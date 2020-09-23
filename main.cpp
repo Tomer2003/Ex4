@@ -6,7 +6,7 @@ int main(int argc, char** argv){
     if(!client_operations::GraphPathHandler::isInteger(std::string(argv[1]))){
         throw exceptions::PortMainArgumentException();
     }
-    if(argc == 3 && std::string(argv[2]) != "parallel"){
+    if(argc == 3 && !client_operations::GraphPathHandler::equalsCaseSensetive(std::string(argv[2]), "parallel")){
         throw exceptions::ServerTypeMainArgumentException();
     }
     client_operations::GraphPathHandler clientHandle;

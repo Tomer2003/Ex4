@@ -121,6 +121,16 @@ namespace client_operations{
          * @return solver_tasks::Solution<solver_tasks::PointNode>& 
          */
         solver_tasks::Solution<solver_tasks::PointNode> getFactorAlgorithmSolution(solver_tasks::MatrixGraphPath& searchable, const std::string& algorithm);
+    
+         /**
+         * @brief The function checks if two string are equal in case sensetive
+         * 
+         * @param string1 - string1
+         * @param string2 - string2
+         * @return true - equals
+         * @return false - not equals
+         */
+        static bool equalsCaseSensetive(const std::string& string1, const std::string& string2);
     };
 
 }

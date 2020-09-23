@@ -13,6 +13,10 @@ namespace client_operations{
       mutex->unlock();
     }
 */
+     bool GraphPathHandler::equalsCaseSensetive(const std::string& a, const std::string& b){
+        return std::equal(a.begin(), a.end(), b.begin(),[](char a, char b) {return tolower(a) == tolower(b);});
+    }
+
     solver_tasks::Solution<solver_tasks::PointNode> GraphPathHandler::getFactorAlgorithmSolution(solver_tasks::MatrixGraphPath& searchable, const std::string& algorithm){
       if(algorithm == "A*"){
         solver_tasks::AStar<solver_tasks::PointNode> ASTARsearcher;
@@ -96,8 +100,8 @@ namespace client_operations{
       auto algorithm = operationDefineMessage.substr(0, operationDefineMessage.find("\r\n"));
       operationDefineMessage.erase(0, operationDefineMessage.find("\r\n"));
       
-      if(operationDefineMessage.substr(0, 4) != "\r\n\r\n" || operation != "solve" || problem != "find-graph-path"
-      || (algorithm != "A*" && algorithm != "BFS" && algorithm != "DFS")){
+      if(operationDefineMessage.substr(0, 4) != "\r\n\r\n" || !equalsCaseSensetive(operation, "solve") || !equalsCaseSensetive(problem, "find-graph-path")
+      || (!equalsCaseSensetive(algorithm, "A*") && !equalsCaseSensetive(algorithm, "BFS") && !equalsCaseSensetive(algorithm, "DFS"))){
         throw exceptions::DefenitionProblemMessageException();
         
       }
