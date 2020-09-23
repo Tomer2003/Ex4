@@ -28,7 +28,7 @@ namespace client_operations{
             size_t start_pos = 0;
             while((start_pos = str.find(from, start_pos)) != std::string::npos) {
                 str.replace(start_pos, from.length(), to);
-                start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+                start_pos += to.length(); 
             }
       }
 
@@ -54,6 +54,18 @@ namespace client_operations{
         string.erase(0, string.find(ch) + 1);
       }
       return index - 1;
+    }
+
+    solver_tasks::PointNode GraphPathHandler::getPointOfPointString(std::string& string, const exceptions::Exception exception){
+      if(string.find(",") == std::string::npos){
+        throw exception;
+      }
+      auto row = string.substr(0, string.find(","));
+      auto column = string.substr(string.find(",") + 1, string.size() - string.find(",") - 1);
+      if(!isInteger(row) || !isInteger(column)){
+        throw exception;
+      }
+      return solver_tasks::PointNode(std::stoi(row), std::stoi(column), 0, 0);
     }
 
     void GraphPathHandler::handleException(int clientFileDescriptor, const exceptions::Exception& exceptoin) const{
@@ -145,29 +157,13 @@ namespace client_operations{
       matrix = matrix::Matrix::getMatrixFromString(matrixString);
       operationDataMessage.erase(0, getIndexOccurences(operationDataMessage, '\n', std::stoi(height)) + 1);
 
-      auto matrixEnter = operationDataMessage.substr(0, operationDataMessage.find('\n'));
+      auto matrixEnterString = operationDataMessage.substr(0, operationDataMessage.find('\r'));
       operationDataMessage.erase(0, operationDataMessage.find('\n') + 1);
-      if(matrixDefenitionSizes.find(",") == std::string::npos){
-        exceptions::MatrixEnterPointException();
-      }
-      auto rowCoordinateEnter = matrixEnter.substr(0, matrixEnter.find(","));
-      auto columnCoordinateEnter = matrixEnter.substr(matrixEnter.find(",") + 1, matrixEnter.size());
-      if(!isInteger(width) || !isInteger(height)){
-        exceptions::MatrixEnterPointException();
-      }
-      auto enterMatrixPoint = solver_tasks::PointNode(std::stoi(rowCoordinateEnter), std::stoi(columnCoordinateEnter), 0, 0);
+      auto enterMatrixPoint = getPointOfPointString(matrixEnterString, exceptions::MatrixEnterPointException());
 
-      auto matrixExit = operationDataMessage.substr(0, operationDataMessage.find('\n'));
+      auto matrixExitString = operationDataMessage.substr(0, operationDataMessage.find('\r'));
       operationDataMessage.erase(0, operationDataMessage.find('\n') + 1);
-      if(matrixDefenitionSizes.find(",") == std::string::npos){
-        exceptions::MatrixExitPointException();
-      }
-      auto rowCoordinateExit = matrixExit.substr(0, matrixExit.find(","));
-      auto columnCoordinateExit = matrixExit.substr(matrixExit.find(",") + 1, matrixExit.size());
-      if(!isInteger(width) || !isInteger(height)){
-        exceptions::MatrixExitPointException();
-      }
-      auto exitMatrixPoint = solver_tasks::PointNode(std::stoi(rowCoordinateExit), std::stoi(columnCoordinateExit), 0, 0);
+      auto exitMatrixPoint = getPointOfPointString(matrixExitString, exceptions::MatrixExitPointException());
      
       std::string solutionMessage;
       if(exitMatrixPoint == enterMatrixPoint){

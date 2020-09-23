@@ -131,6 +131,15 @@ namespace client_operations{
          * @return false - not equals
          */
         static bool equalsCaseSensetive(const std::string& string1, const std::string& string2);
+
+        /**
+         * @brief The function return PointNode object of point string
+         * 
+         * @param string - point string
+         * @param exception - exception 
+         * @return solver_tasks::PointNode - point of string 
+         */
+        solver_tasks::PointNode getPointOfPointString(std::string& string, const exceptions::Exception exception);
     };
 
 }

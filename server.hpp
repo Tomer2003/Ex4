@@ -6,6 +6,8 @@
 #include <thread>
 #include <algorithm>
 #include <netinet/in.h> 
+#include <atomic>
+#include <chrono>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <vector>
@@ -34,13 +36,6 @@ namespace server_side{
          * 
          */
         virtual void open() = 0;
-
-        /**
-         * @brief The function close the server.
-         * 
-         */
-        virtual void stop() const = 0;
-
 
        /**
         * @brief The function create a file descriptor of tcp socket with appopriate parameters.
@@ -90,12 +85,6 @@ namespace server_side{
          * 
          */
         void open();
-
-        /**
-         * @brief The function close the server.
-         * 
-         */
-        void stop() const;
 
        /**
         * @brief The function accept clients and handle with them.

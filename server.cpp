@@ -74,8 +74,4 @@ namespace server_side{
         sockaddr_in address = createFileDescriptor();
         acceptClients(address);
     }
-
-    void ParallelServer::stop() const{
-
-    }
 }
