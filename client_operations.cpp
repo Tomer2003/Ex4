@@ -1,5 +1,6 @@
 #include "client_operations.hpp"
 #define BYTES_TO_READ_PER_STREAM 10240
+#define MAX_SECONDS_WAITE_FOR_CLIENT_RESPONSE 5
 namespace client_operations{
 
     
@@ -67,30 +68,42 @@ namespace client_operations{
       return index - 1;
     }
 
-    void GraphPathHandler::handleException(int clientFileDescriptor, exceptions::Exception& exceptoin) const{
+    void GraphPathHandler::handleException(int clientFileDescriptor, const exceptions::Exception& exceptoin) const{
       std::string errorMessage = "Version: 1.0\r\nstatus: " + std::to_string(exceptoin.getStatus()) + "\r\nresponse-length: 0\r\n\r\n";
       write(clientFileDescriptor, (void*)errorMessage.data(), static_cast<unsigned int>(errorMessage.size()));
       close(clientFileDescriptor);
     }
+    
+
+    void GraphPathHandler::stopConnection(std::atomic<bool>& clientResponse, std::atomic<bool>& responseMoreThanAvailable, const int clientFileDscriptor) const{
+      int miliseconds = 0;
+      int a = clientFileDscriptor;
+      a++;
+      while (!clientResponse && miliseconds < MAX_SECONDS_WAITE_FOR_CLIENT_RESPONSE * 1000)
+      {
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        miliseconds += 5;
+      }
+    
+
+      if(miliseconds >= MAX_SECONDS_WAITE_FOR_CLIENT_RESPONSE * 1000 && !clientResponse){
+        responseMoreThanAvailable = true;
+        handleException(clientFileDscriptor, exceptions::ServerWaitedToClientResponseException());
+      }
+    }
 
     std::string GraphPathHandler::defineProblemMessageHandler(const int clientFielDescriptor, const int serverFileDescriptor) const{
       std::string operationDefineMessage(BYTES_TO_READ_PER_STREAM, '\0');
+
+      std::atomic<bool> clientResponse(false);
+      std::atomic<bool> responseMoreThanAvailable(false);
+      std::thread stopConnectionThread(&GraphPathHandler::stopConnection, this, std::ref(clientResponse), std::ref(responseMoreThanAvailable), clientFielDescriptor);
       exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDefineMessage.data(), BYTES_TO_READ_PER_STREAM), STATUS_SERVER_WRITE_READ_EXCEPTION, serverFileDescriptor);
-    /*  //check if the server waits more than 5 seconds to client message
-      bool clientSendMessage = false;
-      bool stopClientConnection = false;
-      std::mutex mutex;
-      std::thread thread(&GraphPathHandler::stopConnection, this, &clientSendMessage, clientFielDescriptor, &stopClientConnection, &mutex);
-      read(clientFielDescriptor, (void*)operationDefineMessage.data(), BYTES_TO_READ_PER_STREAM);
-      mutex.lock();
-      clientSendMessage = true;
-      //shoud to awake here the sleeper thread
-      //thread.join();
-      if(stopClientConnection){
-        return;
+      clientResponse.store(true);
+      stopConnectionThread.join();
+      if(responseMoreThanAvailable){
+        return "exit";
       }
-      mutex.unlock();
-*/
 
       getMessageWithoutMultipleSpaces(operationDefineMessage);
       auto operation = operationDefineMessage.substr(0, operationDefineMessage.find(" "));
@@ -113,7 +126,17 @@ namespace client_operations{
 
     void GraphPathHandler::dataProblemHandler(const int clientFielDescriptor, const int serverFileDescriptor, const std::string& algorithm) {
       std::string operationDataMessage(BYTES_TO_READ_PER_STREAM, '\0');
+
+      std::atomic<bool> clientResponse(false);
+      std::atomic<bool> responseMoreThanAvailable(false);
+      std::thread stopConnectionThread(&GraphPathHandler::stopConnection, this, std::ref(clientResponse), std::ref(responseMoreThanAvailable), clientFielDescriptor);
       exceptions::serverErrorCheck(read(clientFielDescriptor, (void*)operationDataMessage.data(), BYTES_TO_READ_PER_STREAM), STATUS_SERVER_WRITE_READ_EXCEPTION, serverFileDescriptor);
+      clientResponse.store(true);
+      stopConnectionThread.join();
+      if(responseMoreThanAvailable){
+        throw exceptions::ServerWaitedToClientResponseException();
+      }
+
       operationDataMessage.erase(std::remove(operationDataMessage.begin(), operationDataMessage.end(), ' '), operationDataMessage.end());
       auto matrixDefenitionSizes = operationDataMessage.substr(0, operationDataMessage.find('\n'));
       operationDataMessage.erase(0, operationDataMessage.find('\n') + 1);
@@ -164,14 +187,16 @@ namespace client_operations{
 
       std::string solutionMessage = "Version: 1.0\r\nstatus: 0\r\nresponse-length: " + std::to_string(solution.getSolution().size()) + "\r\n" + solution.getSolution() + "\r\n\r\n";
 
-      write(clientFielDescriptor, (void*)solutionMessage.data(), static_cast<unsigned int>(solutionMessage.size()));
+      exceptions::serverErrorCheck(write(clientFielDescriptor, (void*)solutionMessage.data(), static_cast<unsigned int>(solutionMessage.size())), STATUS_SERVER_WRITE_READ_EXCEPTION, serverFileDescriptor);;
     }
 
     void GraphPathHandler::handleClient(const int clientFielDescriptor, const int serverFileDescriptor) {
       try{
         std::string algorithm = defineProblemMessageHandler(clientFielDescriptor, serverFileDescriptor);
-        dataProblemHandler(clientFielDescriptor, serverFileDescriptor, algorithm);
-        close(clientFielDescriptor);
+        if(algorithm != "exit"){
+          dataProblemHandler(clientFielDescriptor, serverFileDescriptor, algorithm);
+          close(clientFielDescriptor);
+        }
       } catch (exceptions::Exception& exception){
         handleException(clientFielDescriptor, exception);
       }

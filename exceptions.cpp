@@ -48,6 +48,8 @@ namespace exceptions{
     MatrixEnterPointException::MatrixEnterPointException() noexcept : Exception(STATUS_MATRIX_ENTER_POINT_EXCEPTION){}
 
     MatrixExitPointException::MatrixExitPointException() noexcept : Exception(STATUS_MATRIX_EXIT_POINT_EXCEPTION){}
+
+    ServerWaitedToClientResponseException::ServerWaitedToClientResponseException() noexcept : Exception(STATUS_SERVER_WAITED_TO_CLIENT_RESPONSE_EXCEPTION){}
 }
 
 

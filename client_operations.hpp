@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <unistd.h>
 #include <mutex>
+#include <atomic>
 #include <thread>
 #include <chrono> 
 
@@ -27,7 +28,7 @@ namespace client_operations{
          * @param clientFileDescriptor - client file descriptor.
          * @param exceptoin - exception.
          */
-        virtual void handleException(int clientFileDescriptor, exceptions::Exception& exceptoin) const = 0; 
+        virtual void handleException(int clientFileDescriptor, const exceptions::Exception& exceptoin) const = 0; 
     };
 
     class GraphPathHandler : public ClientHandler{
@@ -66,17 +67,16 @@ namespace client_operations{
          * @param clientFileDescriptor - client file descriptor.
          * @param exceptoin - exception.
          */
-        virtual void handleException(int clientFileDescriptor, exceptions::Exception& exceptoin) const;
+        virtual void handleException(int clientFileDescriptor, const exceptions::Exception& exceptoin) const;
 
         /**
          * @brief The function stop client connection if the server waits more than 5 seconds to client message
          * 
-         * @param ptrClientSendMessage - if client send message(pointer)
-         * @param clientFielDescriptor - client file descriptor
-         * @param stopConnection - if should stop connection(waits more than 5 seconds)
-         * @param mutex - mutex 
+         * @param serverFileDscriptor - server file descriptor
+         * @param clientResponse - if the client response
+         * @param responseMoreThanAvailable - if response take more than available time
          */
-        void stopConnection(bool* ptrClientSendMessage, const int clientFielDescriptor, bool* stopConnection, std::mutex* mutex) const;
+        void stopConnection(std::atomic<bool>& clientResponse, std::atomic<bool>& responseMoreThanAvailable, const int clientFileDscriptor) const;
 
         /**
          * @brief The function return message without multiply spaces or tabs

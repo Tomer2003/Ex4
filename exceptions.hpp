@@ -12,6 +12,7 @@
 #define STATUS_MATRIX_SIZES_EXCEPTION 8
 #define STATUS_MATRIX_ENTER_POINT_EXCEPTION 9
 #define STATUS_MATRIX_EXIT_POINT_EXCEPTION 10
+#define STATUS_SERVER_WAITED_TO_CLIENT_RESPONSE_EXCEPTION 11
 
 namespace exceptions{
     void serverErrorCheck(const int returnValue, int const status, const int serverFileDescriptor);
@@ -73,6 +74,11 @@ namespace exceptions{
     class MatrixExitPointException : public Exception{
         public:
             MatrixExitPointException() noexcept;
+    };
+    
+    class ServerWaitedToClientResponseException : public Exception{
+        public:
+            ServerWaitedToClientResponseException() noexcept;
     };
 
     class MainArgumentsNumException{
