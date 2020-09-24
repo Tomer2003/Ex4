@@ -55,3 +55,5 @@ Command line arguments:
 14. The matrix has negative values.
 
 15. Invalid algorithm.
+
+16. Invalid matrix according size that given.

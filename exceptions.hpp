@@ -17,6 +17,7 @@
 #define STATUS_GOAL_STATE_NOT_EXIST_ERROR 13
 #define STATUS_NEGATIVE_NUM_IN_MATRIX_EXCEPTION 14
 #define STATUS_ALGORITHM_DOES_NOT_EXIST_EXCEPTION 15
+#define STATUS_MATRIX_NOT_MATCH_TO_SIZE_EXCEPTION 16
 
 namespace exceptions{
     /**
@@ -202,6 +203,15 @@ namespace exceptions{
             * 
             */
             AlgorithmDoesNotExistException() noexcept;
+    };
+
+    class MatrixNotMatchToSizeException : public Exception{
+        public:
+           /**
+            * @brief Construct a new Algorithm Does Not Exist Exception object
+            * 
+            */
+            MatrixNotMatchToSizeException() noexcept;
     };
 }
 

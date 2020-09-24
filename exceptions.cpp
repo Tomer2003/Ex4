@@ -58,6 +58,8 @@ namespace exceptions{
     MatrixNegativeNumberException::MatrixNegativeNumberException() noexcept : Exception(STATUS_NEGATIVE_NUM_IN_MATRIX_EXCEPTION){}
 
     AlgorithmDoesNotExistException::AlgorithmDoesNotExistException() noexcept : Exception(STATUS_ALGORITHM_DOES_NOT_EXIST_EXCEPTION){}
+
+    MatrixNotMatchToSizeException::MatrixNotMatchToSizeException() noexcept : Exception(STATUS_MATRIX_NOT_MATCH_TO_SIZE_EXCEPTION){}
 }
 
 

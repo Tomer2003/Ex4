@@ -508,17 +508,17 @@ ContinuousSubmit/fast:
 .PHONY : ContinuousSubmit/fast
 
 #=============================================================================
-# Target rules for targets named tester
+# Target rules for targets named ex4.out
 
 # Build rule for target.
-tester: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tester
-.PHONY : tester
+ex4.out: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ex4.out
+.PHONY : ex4.out
 
 # fast build rule for target.
-tester/fast:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/build
-.PHONY : tester/fast
+ex4.out/fast:
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/build
+.PHONY : ex4.out/fast
 
 client_operations.o: client_operations.cpp.o
 
@@ -526,7 +526,7 @@ client_operations.o: client_operations.cpp.o
 
 # target to build an object file
 client_operations.cpp.o:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/client_operations.cpp.o
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/client_operations.cpp.o
 .PHONY : client_operations.cpp.o
 
 client_operations.i: client_operations.cpp.i
@@ -535,7 +535,7 @@ client_operations.i: client_operations.cpp.i
 
 # target to preprocess a source file
 client_operations.cpp.i:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/client_operations.cpp.i
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/client_operations.cpp.i
 .PHONY : client_operations.cpp.i
 
 client_operations.s: client_operations.cpp.s
@@ -544,7 +544,7 @@ client_operations.s: client_operations.cpp.s
 
 # target to generate assembly for a file
 client_operations.cpp.s:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/client_operations.cpp.s
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/client_operations.cpp.s
 .PHONY : client_operations.cpp.s
 
 exceptions.o: exceptions.cpp.o
@@ -553,7 +553,7 @@ exceptions.o: exceptions.cpp.o
 
 # target to build an object file
 exceptions.cpp.o:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/exceptions.cpp.o
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/exceptions.cpp.o
 .PHONY : exceptions.cpp.o
 
 exceptions.i: exceptions.cpp.i
@@ -562,7 +562,7 @@ exceptions.i: exceptions.cpp.i
 
 # target to preprocess a source file
 exceptions.cpp.i:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/exceptions.cpp.i
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/exceptions.cpp.i
 .PHONY : exceptions.cpp.i
 
 exceptions.s: exceptions.cpp.s
@@ -571,7 +571,7 @@ exceptions.s: exceptions.cpp.s
 
 # target to generate assembly for a file
 exceptions.cpp.s:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/exceptions.cpp.s
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/exceptions.cpp.s
 .PHONY : exceptions.cpp.s
 
 main.o: main.cpp.o
@@ -580,7 +580,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -589,7 +589,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -598,7 +598,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 matrix/ClassMatrix.o: matrix/ClassMatrix.cpp.o
@@ -607,7 +607,7 @@ matrix/ClassMatrix.o: matrix/ClassMatrix.cpp.o
 
 # target to build an object file
 matrix/ClassMatrix.cpp.o:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/matrix/ClassMatrix.cpp.o
 .PHONY : matrix/ClassMatrix.cpp.o
 
 matrix/ClassMatrix.i: matrix/ClassMatrix.cpp.i
@@ -616,7 +616,7 @@ matrix/ClassMatrix.i: matrix/ClassMatrix.cpp.i
 
 # target to preprocess a source file
 matrix/ClassMatrix.cpp.i:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.i
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/matrix/ClassMatrix.cpp.i
 .PHONY : matrix/ClassMatrix.cpp.i
 
 matrix/ClassMatrix.s: matrix/ClassMatrix.cpp.s
@@ -625,7 +625,7 @@ matrix/ClassMatrix.s: matrix/ClassMatrix.cpp.s
 
 # target to generate assembly for a file
 matrix/ClassMatrix.cpp.s:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.s
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/matrix/ClassMatrix.cpp.s
 .PHONY : matrix/ClassMatrix.cpp.s
 
 matrix/MatrixExceptions.o: matrix/MatrixExceptions.cpp.o
@@ -634,7 +634,7 @@ matrix/MatrixExceptions.o: matrix/MatrixExceptions.cpp.o
 
 # target to build an object file
 matrix/MatrixExceptions.cpp.o:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.o
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/matrix/MatrixExceptions.cpp.o
 .PHONY : matrix/MatrixExceptions.cpp.o
 
 matrix/MatrixExceptions.i: matrix/MatrixExceptions.cpp.i
@@ -643,7 +643,7 @@ matrix/MatrixExceptions.i: matrix/MatrixExceptions.cpp.i
 
 # target to preprocess a source file
 matrix/MatrixExceptions.cpp.i:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.i
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/matrix/MatrixExceptions.cpp.i
 .PHONY : matrix/MatrixExceptions.cpp.i
 
 matrix/MatrixExceptions.s: matrix/MatrixExceptions.cpp.s
@@ -652,7 +652,7 @@ matrix/MatrixExceptions.s: matrix/MatrixExceptions.cpp.s
 
 # target to generate assembly for a file
 matrix/MatrixExceptions.cpp.s:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.s
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/matrix/MatrixExceptions.cpp.s
 .PHONY : matrix/MatrixExceptions.cpp.s
 
 server.o: server.cpp.o
@@ -661,7 +661,7 @@ server.o: server.cpp.o
 
 # target to build an object file
 server.cpp.o:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/server.cpp.o
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/server.cpp.o
 .PHONY : server.cpp.o
 
 server.i: server.cpp.i
@@ -670,7 +670,7 @@ server.i: server.cpp.i
 
 # target to preprocess a source file
 server.cpp.i:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/server.cpp.i
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/server.cpp.i
 .PHONY : server.cpp.i
 
 server.s: server.cpp.s
@@ -679,7 +679,7 @@ server.s: server.cpp.s
 
 # target to generate assembly for a file
 server.cpp.s:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/server.cpp.s
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/server.cpp.s
 .PHONY : server.cpp.s
 
 solver_tasks.o: solver_tasks.cpp.o
@@ -688,7 +688,7 @@ solver_tasks.o: solver_tasks.cpp.o
 
 # target to build an object file
 solver_tasks.cpp.o:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/solver_tasks.cpp.o
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/solver_tasks.cpp.o
 .PHONY : solver_tasks.cpp.o
 
 solver_tasks.i: solver_tasks.cpp.i
@@ -697,7 +697,7 @@ solver_tasks.i: solver_tasks.cpp.i
 
 # target to preprocess a source file
 solver_tasks.cpp.i:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/solver_tasks.cpp.i
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/solver_tasks.cpp.i
 .PHONY : solver_tasks.cpp.i
 
 solver_tasks.s: solver_tasks.cpp.s
@@ -706,7 +706,7 @@ solver_tasks.s: solver_tasks.cpp.s
 
 # target to generate assembly for a file
 solver_tasks.cpp.s:
-	$(MAKE) -f CMakeFiles/tester.dir/build.make CMakeFiles/tester.dir/solver_tasks.cpp.s
+	$(MAKE) -f CMakeFiles/ex4.out.dir/build.make CMakeFiles/ex4.out.dir/solver_tasks.cpp.s
 .PHONY : solver_tasks.cpp.s
 
 # Help Target
@@ -748,7 +748,7 @@ help:
 	@echo "... ContinuousMemCheck"
 	@echo "... ContinuousTest"
 	@echo "... ContinuousSubmit"
-	@echo "... tester"
+	@echo "... ex4.out"
 	@echo "... client_operations.o"
 	@echo "... client_operations.i"
 	@echo "... client_operations.s"

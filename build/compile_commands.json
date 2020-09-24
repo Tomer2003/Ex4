@@ -1,37 +1,37 @@
 [
 {
   "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
-  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/tester.dir/main.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/main.cpp\"",
+  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/ex4.out.dir/main.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/main.cpp\"",
   "file": "/home/tomer/Advanced Programmin 1/Ex4/main.cpp"
 },
 {
   "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
-  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/tester.dir/exceptions.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/exceptions.cpp\"",
+  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/ex4.out.dir/exceptions.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/exceptions.cpp\"",
   "file": "/home/tomer/Advanced Programmin 1/Ex4/exceptions.cpp"
 },
 {
   "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
-  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/tester.dir/server.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/server.cpp\"",
+  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/ex4.out.dir/server.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/server.cpp\"",
   "file": "/home/tomer/Advanced Programmin 1/Ex4/server.cpp"
 },
 {
   "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
-  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/tester.dir/client_operations.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/client_operations.cpp\"",
+  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/ex4.out.dir/client_operations.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/client_operations.cpp\"",
   "file": "/home/tomer/Advanced Programmin 1/Ex4/client_operations.cpp"
 },
 {
   "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
-  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/tester.dir/solver_tasks.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/solver_tasks.cpp\"",
+  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/ex4.out.dir/solver_tasks.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/solver_tasks.cpp\"",
   "file": "/home/tomer/Advanced Programmin 1/Ex4/solver_tasks.cpp"
 },
 {
   "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
-  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/tester.dir/matrix/MatrixExceptions.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.cpp\"",
+  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/ex4.out.dir/matrix/MatrixExceptions.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.cpp\"",
   "file": "/home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.cpp"
 },
 {
   "directory": "/home/tomer/Advanced Programmin 1/Ex4/build",
-  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/tester.dir/matrix/ClassMatrix.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.cpp\"",
+  "command": "/bin/c++   -I\"/home/tomer/Advanced Programmin 1/Ex4/matrix\"  -g   -Wall -Wextra -pedantic -Werror -o CMakeFiles/ex4.out.dir/matrix/ClassMatrix.cpp.o -c \"/home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.cpp\"",
   "file": "/home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.cpp"
 }
 ]

@@ -161,7 +161,10 @@ namespace client_operations{
       }
       
       std::string matrixString = operationDataMessage.substr(0, getIndexOccurences(operationDataMessage, '\n', std::stoi(height)));
-       if(matrixString.find("-") != std::string::npos){
+      if(std::count(matrixString.begin(), matrixString.end(), ',') != std::stoi(height) * (std::stoi(width) - 1)){
+        throw exceptions::MatrixNotMatchToSizeException();
+      }
+      if(matrixString.find("-") != std::string::npos){
         throw exceptions::MatrixNegativeNumberException();
       }
       replaceAll(matrixString, "b", "-1");

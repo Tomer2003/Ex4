@@ -31,4 +31,4 @@
 /home/tomer/Advanced Programmin 1/Ex4/build/CMakeFiles/ContinuousMemCheck.dir
 /home/tomer/Advanced Programmin 1/Ex4/build/CMakeFiles/ContinuousTest.dir
 /home/tomer/Advanced Programmin 1/Ex4/build/CMakeFiles/ContinuousSubmit.dir
-/home/tomer/Advanced Programmin 1/Ex4/build/CMakeFiles/tester.dir
+/home/tomer/Advanced Programmin 1/Ex4/build/CMakeFiles/ex4.out.dir
