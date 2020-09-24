@@ -30,12 +30,38 @@ thread
 chrono
 -
 
+/home/tomer/Advanced Programmin 1/Ex4/exceptions.cpp
+exceptions.hpp
+/home/tomer/Advanced Programmin 1/Ex4/exceptions.hpp
+
 /home/tomer/Advanced Programmin 1/Ex4/exceptions.hpp
 iostream
 -
 unistd.h
 -
 errno.h
+-
+
+/home/tomer/Advanced Programmin 1/Ex4/main.cpp
+server.hpp
+/home/tomer/Advanced Programmin 1/Ex4/server.hpp
+
+/home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.cpp
+Matrix.h
+/home/tomer/Advanced Programmin 1/Ex4/matrix/Matrix.h
+ClassMatrix.hpp
+/home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.hpp
+MatrixExceptions.hpp
+/home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.hpp
+iostream
+-
+algorithm
+-
+vector
+-
+sstream
+-
+fstream
 -
 
 /home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.hpp
@@ -57,6 +83,52 @@ stdint.h
 -
 ErrorCode.h
 /home/tomer/Advanced Programmin 1/Ex4/matrix/ErrorCode.h
+
+/home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.cpp
+MatrixExceptions.hpp
+/home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.hpp
+ErrorCode.h
+/home/tomer/Advanced Programmin 1/Ex4/matrix/ErrorCode.h
+iostream
+-
+
+/home/tomer/Advanced Programmin 1/Ex4/matrix/MatrixExceptions.hpp
+ErrorCode.h
+/home/tomer/Advanced Programmin 1/Ex4/matrix/ErrorCode.h
+
+/home/tomer/Advanced Programmin 1/Ex4/server.cpp
+server.hpp
+/home/tomer/Advanced Programmin 1/Ex4/server.hpp
+
+/home/tomer/Advanced Programmin 1/Ex4/server.hpp
+client_operations.hpp
+/home/tomer/Advanced Programmin 1/Ex4/client_operations.hpp
+exceptions.hpp
+/home/tomer/Advanced Programmin 1/Ex4/exceptions.hpp
+sys/socket.h
+-
+thread
+-
+algorithm
+-
+netinet/in.h
+-
+atomic
+-
+chrono
+-
+arpa/inet.h
+-
+unistd.h
+-
+vector
+-
+mutex
+-
+
+/home/tomer/Advanced Programmin 1/Ex4/solver_tasks.cpp
+solver_tasks.hpp
+/home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp
 
 /home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp
 matrix/ClassMatrix.hpp

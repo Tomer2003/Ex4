@@ -16,6 +16,7 @@
 #define STATUS_INITIAL_STATE_NOT_EXIST_ERROR 12
 #define STATUS_GOAL_STATE_NOT_EXIST_ERROR 13
 #define STATUS_NEGATIVE_NUM_IN_MATRIX_EXCEPTION 14
+#define STATUS_ALGORITHM_DOES_NOT_EXIST_EXCEPTION 15
 
 namespace exceptions{
     /**
@@ -192,6 +193,15 @@ namespace exceptions{
              * 
              */
             MatrixNegativeNumberException() noexcept;
+    };
+
+    class AlgorithmDoesNotExistException : public Exception{
+        public:
+           /**
+            * @brief Construct a new Algorithm Does Not Exist Exception object
+            * 
+            */
+            AlgorithmDoesNotExistException() noexcept;
     };
 }
 

@@ -53,3 +53,5 @@ Command line arguments:
 13. Goal state of matrix blanked.
 
 14. The matrix has negative values.
+
+15. Invalid algorithm

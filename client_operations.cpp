@@ -16,10 +16,11 @@ namespace client_operations{
         solver_tasks::BreadthFirstSearch<solver_tasks::PointNode> BFSsearcher;
         return BFSsearcher.search(searchable);
       }
-     else{
+      if(algorithm == "DFS"){
         solver_tasks::DepthFirstSearch<solver_tasks::PointNode> DFSsearcher;
         return DFSsearcher.search(searchable);
       }
+      throw exceptions::AlgorithmDoesNotExistException();
     }
 
     void GraphPathHandler::replaceAll(std::string& str, const std::string& from, const std::string& to) {
