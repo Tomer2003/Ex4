@@ -148,16 +148,18 @@ namespace client_operations{
         throw exceptions::ServerWaitedToClientResponseException();
       }
 
+      getMessageWithoutMultipleSpaces(operationDataMessage);
       operationDataMessage.erase(std::remove(operationDataMessage.begin(), operationDataMessage.end(), ' '), operationDataMessage.end());
       auto matrixDefenitionSizes = operationDataMessage.substr(0, operationDataMessage.find('\n'));
       operationDataMessage.erase(0, operationDataMessage.find('\n') + 1);
       if(matrixDefenitionSizes.find(",") == std::string::npos){
-        exceptions::MatrixSizesException();
+        throw exceptions::MatrixSizesException();
       }
+    
       auto height = matrixDefenitionSizes.substr(0, matrixDefenitionSizes.find(","));
-      auto width = matrixDefenitionSizes.substr(matrixDefenitionSizes.find(",") + 1, matrixDefenitionSizes.size());
+      auto width = matrixDefenitionSizes.substr(matrixDefenitionSizes.find(",") + 1, matrixDefenitionSizes.size() - matrixDefenitionSizes.find(",") - 2);
       if(!isInteger(width) || !isInteger(height)){
-        exceptions::MatrixSizesException();
+        throw exceptions::MatrixSizesException();
       }
       
       std::string matrixString = operationDataMessage.substr(0, getIndexOccurences(operationDataMessage, '\n', std::stoi(height)));
@@ -165,11 +167,14 @@ namespace client_operations{
         throw exceptions::MatrixNotMatchToSizeException();
       }
       if(matrixString.find("-") != std::string::npos){
-        throw exceptions::MatrixNegativeNumberException();
+        throw exceptions::MatrixtNonePositiveNumberException();
       }
       replaceAll(matrixString, "b", "-1");
 
       matrix::Matrix matrix = matrix::Matrix::getMatrixFromString(matrixString);
+      if(matrix.checkIfHasValue(0)){
+        throw exceptions::MatrixtNonePositiveNumberException();
+      }
       if(std::stoi(height) != static_cast<int>(matrix.matrixGetHeight()) || std::stoi(width) != static_cast<int>(matrix.matrixGetWidth())){
         throw exceptions::MatrixSizesException();
       }

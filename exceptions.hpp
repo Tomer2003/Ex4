@@ -15,7 +15,7 @@
 #define STATUS_SERVER_WAITED_TO_CLIENT_RESPONSE_EXCEPTION 11
 #define STATUS_INITIAL_STATE_NOT_EXIST_ERROR 12
 #define STATUS_GOAL_STATE_NOT_EXIST_ERROR 13
-#define STATUS_NEGATIVE_NUM_IN_MATRIX_EXCEPTION 14
+#define STATUS_NONE_POSITIVE_NUM_IN_MATRIX_EXCEPTION 14
 #define STATUS_ALGORITHM_DOES_NOT_EXIST_EXCEPTION 15
 #define STATUS_MATRIX_NOT_MATCH_TO_SIZE_EXCEPTION 16
 
@@ -187,13 +187,13 @@ namespace exceptions{
             GoalStateNotExistException() noexcept;
     };
 
-    class MatrixNegativeNumberException : public Exception{
+    class MatrixtNonePositiveNumberException : public Exception{
         public:
             /**
              * @brief Construct a new Goal State Not Exist Exception object
              * 
              */
-            MatrixNegativeNumberException() noexcept;
+            MatrixtNonePositiveNumberException() noexcept;
     };
 
     class AlgorithmDoesNotExistException : public Exception{
@@ -208,11 +208,12 @@ namespace exceptions{
     class MatrixNotMatchToSizeException : public Exception{
         public:
            /**
-            * @brief Construct a new Algorithm Does Not Exist Exception object
+            * @brief Construct a new Matrix Not Match To Size Exception object
             * 
             */
             MatrixNotMatchToSizeException() noexcept;
     };
+
 }
 
 

@@ -55,7 +55,7 @@ namespace exceptions{
 
     GoalStateNotExistException::GoalStateNotExistException() noexcept : Exception(STATUS_GOAL_STATE_NOT_EXIST_ERROR){}
 
-    MatrixNegativeNumberException::MatrixNegativeNumberException() noexcept : Exception(STATUS_NEGATIVE_NUM_IN_MATRIX_EXCEPTION){}
+    MatrixtNonePositiveNumberException::MatrixtNonePositiveNumberException() noexcept : Exception(STATUS_NONE_POSITIVE_NUM_IN_MATRIX_EXCEPTION){}
 
     AlgorithmDoesNotExistException::AlgorithmDoesNotExistException() noexcept : Exception(STATUS_ALGORITHM_DOES_NOT_EXIST_EXCEPTION){}
 

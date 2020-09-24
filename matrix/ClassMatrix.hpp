@@ -129,9 +129,17 @@ namespace matrix{
         /**
          * @brief The function return string of matrix.
          * 
-         * @return const std::string - string of matrix
+         * @return const std::string - string of matrix.
          */
         const std::string getStringOfMatrix() const;
+
+        /**
+         * @brief The function checks if matrix has the value.
+         * 
+         * @return true - the matrix has the value.
+         * @return false - the matrix not has the value.
+         */
+        bool checkIfHasValue(const int value) const;
 
         /**
          * @brief Destroy the Matrix object

@@ -17,6 +17,17 @@ namespace matrix{
     Matrix::Matrix(const Matrix& matrix) :m_width(matrix.m_width), m_height(matrix.m_height){
         Exceptions::throwAppopriateErrorIfHas(matrix_copy(&this->m_pMatrix, matrix.m_pMatrix));
     }
+    
+    bool Matrix::checkIfHasValue(const int value) const{
+        for(unsigned int row = 0; row < m_height; ++row){
+            for(unsigned int column = 0; column < m_width; ++column){
+                if(this->operator()(row, column) == value){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     Matrix::Matrix(Matrix&& matrix) :m_width(matrix.m_width), m_height(matrix.m_height){
         this->m_pMatrix = matrix.m_pMatrix;
