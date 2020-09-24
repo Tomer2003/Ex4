@@ -6,9 +6,9 @@ The program is multy thread server that can handle with search path in matrix gr
 
 Command line arguments: 
 
-- arg1: port
+- arg1: port.
  
-- arg2: server type
+- arg2: server type.
 
 # server options
 
@@ -17,22 +17,22 @@ Command line arguments:
 
 # algorithms for graph path search in matrix
 
-1. BFS
+1. BFS.
 
-2. DFS
+2. DFS.
 
-3. A*
+3. A*.
 
 
 # Status
 
-1. There is no path in the matrix .
+1. There is no path in the matrix.
 
 2. Incorrect solve message.
 
 3. Server can't write or read from file.
 
-4. Server has a bind exception .
+4. Server has a bind exception.
 
 5. Server has a listen exception.
 
@@ -42,7 +42,7 @@ Command line arguments:
 
 8. Matrix has not appopriate exception.
 
-9. Matrix enter point invalid .
+9. Matrix enter point invalid.
 
 10. Matrix exit point invalid.
 
@@ -54,4 +54,4 @@ Command line arguments:
 
 14. The matrix has negative values.
 
-15. Invalid algorithm
+15. Invalid algorithm.
