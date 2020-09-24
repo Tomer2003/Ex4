@@ -50,6 +50,14 @@ namespace exceptions{
     MatrixExitPointException::MatrixExitPointException() noexcept : Exception(STATUS_MATRIX_EXIT_POINT_EXCEPTION){}
 
     ServerWaitedToClientResponseException::ServerWaitedToClientResponseException() noexcept : Exception(STATUS_SERVER_WAITED_TO_CLIENT_RESPONSE_EXCEPTION){}
+
+    InitialStateNotExistException::InitialStateNotExistException() noexcept : Exception(STATUS_INITIAL_STATE_NOT_EXIST_ERROR){}
+
+    GoalStateNotExistException::GoalStateNotExistException() noexcept : Exception(STATUS_GOAL_STATE_NOT_EXIST_ERROR){}
+
+    MatrixNegativeNumberException::MatrixNegativeNumberException() noexcept : Exception(STATUS_NEGATIVE_NUM_IN_MATRIX_EXCEPTION){}
+
+
 }
 
 

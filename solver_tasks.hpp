@@ -273,7 +273,7 @@ public:
      * @param initialNode - initial node
      * @param goalNdoe - goal node
      */
-    MatrixGraphPath(const matrix::Matrix& matrixGraph, const PointNode& initialNode, const PointNode& goalNdoe) noexcept;
+    MatrixGraphPath(const matrix::Matrix& matrixGraph, const PointNode& initialNode, const PointNode& goalNdoe);
 
     /**
      * @brief The function return initial state

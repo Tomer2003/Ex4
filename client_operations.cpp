@@ -148,13 +148,17 @@ namespace client_operations{
       if(!isInteger(width) || !isInteger(height)){
         exceptions::MatrixSizesException();
       }
-
-
-      matrix::Matrix matrix(std::stoi(height), std::stoi(width));
-
+      
       std::string matrixString = operationDataMessage.substr(0, getIndexOccurences(operationDataMessage, '\n', std::stoi(height)));
+       if(matrixString.find("-") != std::string::npos){
+        throw exceptions::MatrixNegativeNumberException();
+      }
       replaceAll(matrixString, "b", "-1");
-      matrix = matrix::Matrix::getMatrixFromString(matrixString);
+
+      matrix::Matrix matrix = matrix::Matrix::getMatrixFromString(matrixString);
+      if(std::stoi(height) != static_cast<int>(matrix.matrixGetHeight()) || std::stoi(width) != static_cast<int>(matrix.matrixGetWidth())){
+        throw exceptions::MatrixSizesException();
+      }
       operationDataMessage.erase(0, getIndexOccurences(operationDataMessage, '\n', std::stoi(height)) + 1);
 
       auto matrixEnterString = operationDataMessage.substr(0, operationDataMessage.find('\r'));

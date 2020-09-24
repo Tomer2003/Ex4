@@ -13,14 +13,29 @@
 #define STATUS_MATRIX_ENTER_POINT_EXCEPTION 9
 #define STATUS_MATRIX_EXIT_POINT_EXCEPTION 10
 #define STATUS_SERVER_WAITED_TO_CLIENT_RESPONSE_EXCEPTION 11
+#define STATUS_INITIAL_STATE_NOT_EXIST_ERROR 12
+#define STATUS_GOAL_STATE_NOT_EXIST_ERROR 13
+#define STATUS_NEGATIVE_NUM_IN_MATRIX_EXCEPTION 14
 
 namespace exceptions{
+    /**
+     * @brief The function throw error according status exception
+     * 
+     * @param returnValue - return value of posix function libary
+     * @param status - status of exception
+     * @param serverFileDescriptor - server file descriptor
+     */
     void serverErrorCheck(const int returnValue, int const status, const int serverFileDescriptor);
 
     class Exception{
         private:
             unsigned int m_status;
         public:
+            /**
+             * @brief Construct a new Exception object
+             * 
+             * @param status - status exception
+             */
             Exception(unsigned int status) noexcept;
 
             unsigned int getStatus() const;
@@ -28,72 +43,155 @@ namespace exceptions{
 
     class MatrixPathNotFound : public Exception{
         public:
+            /**
+             * @brief Construct a new Matrix Path Not Found object
+             * 
+             */
             MatrixPathNotFound() noexcept;
     };
 
     class ServerReadWriteException : public Exception{
         public:
+            /**
+             * @brief Construct a new Server Read Write Exception object
+             * 
+             */
             ServerReadWriteException() noexcept;
     };
 
     class ServerBindException : public Exception{
         public:
+            /**
+             * @brief Construct a new Server Bind Exception object
+             * 
+             */
             ServerBindException() noexcept;
     };
 
     class ServerListenException : public Exception{
         public:
+            /**
+             * @brief Construct a new Server Listen Exception object
+             * 
+             */
             ServerListenException() noexcept;
     };
 
     class ServerOpenSocketException : public Exception{
-        public:
+        public: 
+            /**
+             * @brief Construct a new Server Open Socket Exception object
+             * 
+             */
             ServerOpenSocketException() noexcept;
     };
 
     class ServerAcceptException : public Exception{
         public:
+            /**
+             * @brief Construct a new Server Accept Exception object
+             * 
+             */
             ServerAcceptException() noexcept;
     };
 
     class DefenitionProblemMessageException : public Exception{
         public:
+            /**
+             * @brief Construct a new Defenition Problem Message Exception object
+             * 
+             */
             DefenitionProblemMessageException() noexcept;
     };
 
     class MatrixSizesException : public Exception{
         public:
+            /**
+             * @brief Construct a new Matrix Sizes Exception object
+             * 
+             */
             MatrixSizesException() noexcept;
     };
 
     class MatrixEnterPointException : public Exception{
         public:
+            /**
+             * @brief Construct a new Matrix Enter Point Exception object
+             * 
+             */
             MatrixEnterPointException() noexcept;
     };
 
     class MatrixExitPointException : public Exception{
         public:
+            /**
+             * @brief Construct a new Matrix Exit Point Exception object
+             * 
+             */
             MatrixExitPointException() noexcept;
     };
     
     class ServerWaitedToClientResponseException : public Exception{
         public:
+            /**
+             * @brief Construct a new Server Waited To Client Response Exception object
+             * 
+             */
             ServerWaitedToClientResponseException() noexcept;
     };
 
     class MainArgumentsNumException{
         public:
+            /**
+             * @brief Construct a new Main Arguments Num Exception object
+             * 
+             */
             MainArgumentsNumException() noexcept{};
     };
 
     class PortMainArgumentException{
         public:
+            /**
+             * @brief Construct a new Port Main Argument Exception object
+             * 
+             */
             PortMainArgumentException() noexcept{};
     };
 
     class ServerTypeMainArgumentException{
         public:
+            /**
+             * @brief Construct a new Server Type Main Argument Exception object
+             * 
+             */
             ServerTypeMainArgumentException() noexcept{};
+    };
+
+    class InitialStateNotExistException : public Exception{
+        public:
+            /**
+             * @brief Construct a new Initial State Not Exist Exception object
+             * 
+             */
+            InitialStateNotExistException() noexcept;
+    };
+
+    class GoalStateNotExistException : public Exception{
+        public:
+            /**
+             * @brief Construct a new Goal State Not Exist Exception object
+             * 
+             */
+            GoalStateNotExistException() noexcept;
+    };
+
+    class MatrixNegativeNumberException : public Exception{
+        public:
+            /**
+             * @brief Construct a new Goal State Not Exist Exception object
+             * 
+             */
+            MatrixNegativeNumberException() noexcept;
     };
 }
 

@@ -48,7 +48,7 @@ namespace solver_tasks{
         m_yCoordinate = yCoordinate;
     }
 
-    MatrixGraphPath::MatrixGraphPath(const matrix::Matrix& matrixGraph, const PointNode& initialNode, const PointNode& goalNdoe) noexcept : m_matrixGraph(matrixGraph), m_initialNode(initialNode), m_goalNode(goalNdoe){
+    MatrixGraphPath::MatrixGraphPath(const matrix::Matrix& matrixGraph, const PointNode& initialNode, const PointNode& goalNdoe) : m_matrixGraph(matrixGraph), m_initialNode(initialNode), m_goalNode(goalNdoe){
         setStatesOfMatrix();
         setDistanceForStatesToGoalState();
     }
@@ -59,9 +59,7 @@ namespace solver_tasks{
                 return state;
             }
         }
-        //throw exception(no initial state)
-        std::cout << "error!a" << std::endl;
-        exit(1);
+        throw exceptions::InitialStateNotExistException();
     }
 
      State<PointNode>& MatrixGraphPath::getGoalState(){
@@ -70,9 +68,7 @@ namespace solver_tasks{
                 return state;
             }
         }
-        //throw exception(no initial state)
-        std::cout << "error!b" << std::endl;
-        exit(1);
+        throw exceptions::GoalStateNotExistException();
     }
 
     State<PointNode>& MatrixGraphPath::getState(const unsigned int row, const unsigned int column){
