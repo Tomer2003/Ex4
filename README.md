@@ -2,6 +2,14 @@
 
 The program is multy thread server that can handle with search path in matrix graph.
 
+- exceptions - A file that defines and deals with exceptions.
+
+- server - A file that defines the logic of the parallel server.
+
+- solver_tasks - A file that defines and implements graphing search algorithms.
+
+- client_operations - A file that defines the protocol that the server supports to communicate with the client.
+
 # usage
 
 Command line arguments: 
