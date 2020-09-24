@@ -1,0 +1,102 @@
+#pragma once
+
+#include "client_operations.hpp"
+#include "exceptions.hpp"
+#include <sys/socket.h>
+#include <thread>
+#include <algorithm>
+#include <netinet/in.h> 
+#include <atomic>
+#include <chrono>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <vector>
+#include <mutex>
+#define BACK_LOGS_NUM 100
+#define THREAD_POOL_SIZE 20
+
+namespace server_side{
+    class Server{
+    private:
+        const unsigned int m_port;
+        client_operations::ClientHandler &m_clientHandler;
+        int m_fileDescriptor;
+
+    public:
+        /**
+         * @brief Construct a new Server object
+         * 
+         * @param port - port to listen.
+         * @param clientHandler - deal with type of message.
+         */
+        Server(const unsigned int port,  client_operations::ClientHandler &clientHandler) noexcept;
+
+        /**
+         * @brief The function open the server and listen for clients.
+         * 
+         */
+        virtual void open() = 0;
+
+       /**
+        * @brief The function create a file descriptor of tcp socket with appopriate parameters.
+        * 
+        * @return sockaddr_in - struct of socket information.
+        */
+        sockaddr_in createFileDescriptor();
+
+        /**
+         * @brief The function set new value to file descriptor.
+         * 
+         * @param fileDescriptor -  new value of file descriptor.
+         */
+        void setFileDescriptor(const int fileDescriptor);
+
+        /**
+         * @brief The function return file descriptor.
+         * 
+         * @return int - file descriptor.
+         */
+        int getFileDescriptor() const;
+
+        /**
+         * @brief The function return client handler.
+         * 
+         * @return const client_operations::ClientHandler& - client handler. 
+         */
+        client_operations::ClientHandler& getClientHandler();
+    };
+
+
+    class ParallelServer : public Server {
+    private:
+        std::vector<std::thread> m_threadPoolVector;
+        std::vector<int> m_clients;
+    public:
+        /**
+         * @brief Construct a new Serial Server object
+         * 
+         * @param port - port to listen.
+         * @param clientHandler - deal with type of message.
+         */
+        ParallelServer(const unsigned int port,  client_operations::ClientHandler &clientHandler) noexcept;
+
+        /**
+         * @brief The function open the server and listen for clients.
+         * 
+         */
+        void open();
+
+       /**
+        * @brief The function accept clients and handle with them.
+        * 
+        * @param addres - struct of socket information.
+        */
+        void acceptClients(sockaddr_in addres);
+
+        /**
+         * @brief The function handle with each client according ClientHandler object.
+         * 
+         */
+        void handleClientConnection();
+    };
+}
