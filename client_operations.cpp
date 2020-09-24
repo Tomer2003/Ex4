@@ -4,19 +4,22 @@
 namespace client_operations{
 
      bool GraphPathHandler::equalsCaseSensetive(const std::string& a, const std::string& b){
-        return std::equal(a.begin(), a.end(), b.begin(),[](char a, char b) {return tolower(a) == tolower(b);});
-    }
+       if(a.size() != b.size()){
+         return false;
+       }
+        return std::equal(a.begin(), a.end(), b.begin(),[] (const char& a, const char& b){return (std::tolower(a) == std::tolower(b));});
+     }
 
     solver_tasks::Solution<solver_tasks::PointNode> GraphPathHandler::getFactorAlgorithmSolution(solver_tasks::MatrixGraphPath& searchable, const std::string& algorithm){
-      if(algorithm == "A*"){
+      if(equalsCaseSensetive(algorithm, "A*")){
         solver_tasks::AStar<solver_tasks::PointNode> ASTARsearcher;
         return ASTARsearcher.search(searchable);
       }
-      if(algorithm == "BFS"){
+      if(equalsCaseSensetive(algorithm, "BFS")){
         solver_tasks::BreadthFirstSearch<solver_tasks::PointNode> BFSsearcher;
         return BFSsearcher.search(searchable);
       }
-      if(algorithm == "DFS"){
+      if(equalsCaseSensetive(algorithm, "DFS")){
         solver_tasks::DepthFirstSearch<solver_tasks::PointNode> DFSsearcher;
         return DFSsearcher.search(searchable);
       }
@@ -106,18 +109,25 @@ namespace client_operations{
         return "exit";
       }
 
+      if(operationDefineMessage.find("\r") == std::string::npos){
+        throw exceptions::DefenitionProblemMessageException();
+      }
+      operationDefineMessage =  operationDefineMessage.substr(0, operationDefineMessage.find("\r")) + " " + operationDefineMessage.substr(operationDefineMessage.find("\r"), operationDefineMessage.size() + 1);
       getMessageWithoutMultipleSpaces(operationDefineMessage);
       auto operation = operationDefineMessage.substr(0, operationDefineMessage.find(" "));
       operationDefineMessage.erase(0, operationDefineMessage.find(" ") + 1);
       auto problem = operationDefineMessage.substr(0, operationDefineMessage.find(" "));
       operationDefineMessage.erase(0, operationDefineMessage.find(" ") + 1);
-      auto algorithm = operationDefineMessage.substr(0, operationDefineMessage.find("\r\n"));
+      auto algorithm = operationDefineMessage.substr(0, operationDefineMessage.find(" "));
       operationDefineMessage.erase(0, operationDefineMessage.find("\r\n"));
       
+      if(algorithm.size() == 0){
+        algorithm = "A*";
+      }
+     
       if(operationDefineMessage.substr(0, 4) != "\r\n\r\n" || !equalsCaseSensetive(operation, "solve") || !equalsCaseSensetive(problem, "find-graph-path")
       || (!equalsCaseSensetive(algorithm, "A*") && !equalsCaseSensetive(algorithm, "BFS") && !equalsCaseSensetive(algorithm, "DFS"))){
         throw exceptions::DefenitionProblemMessageException();
-        
       }
 
       std::string succesMessage = "Version: 1.0\r\nstatus: 0\r\nresponse-length: 0\r\n\r\n";
