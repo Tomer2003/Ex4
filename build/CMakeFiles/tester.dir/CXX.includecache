@@ -1,0 +1,80 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/tomer/Advanced Programmin 1/Ex4/client_operations.cpp
+client_operations.hpp
+/home/tomer/Advanced Programmin 1/Ex4/client_operations.hpp
+
+/home/tomer/Advanced Programmin 1/Ex4/client_operations.hpp
+solver_tasks.hpp
+/home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp
+exceptions.hpp
+/home/tomer/Advanced Programmin 1/Ex4/exceptions.hpp
+iostream
+-
+algorithm
+-
+unistd.h
+-
+mutex
+-
+atomic
+-
+thread
+-
+chrono
+-
+
+/home/tomer/Advanced Programmin 1/Ex4/exceptions.hpp
+iostream
+-
+unistd.h
+-
+errno.h
+-
+
+/home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.hpp
+Matrix.h
+/home/tomer/Advanced Programmin 1/Ex4/matrix/Matrix.h
+stdint.h
+-
+string
+-
+
+/home/tomer/Advanced Programmin 1/Ex4/matrix/ErrorCode.h
+stdbool.h
+-
+stdint.h
+-
+
+/home/tomer/Advanced Programmin 1/Ex4/matrix/Matrix.h
+stdint.h
+-
+ErrorCode.h
+/home/tomer/Advanced Programmin 1/Ex4/matrix/ErrorCode.h
+
+/home/tomer/Advanced Programmin 1/Ex4/solver_tasks.hpp
+matrix/ClassMatrix.hpp
+/home/tomer/Advanced Programmin 1/Ex4/matrix/ClassMatrix.hpp
+exceptions.hpp
+/home/tomer/Advanced Programmin 1/Ex4/exceptions.hpp
+string
+-
+vector
+-
+iostream
+-
+queue
+-
+algorithm
+-
+cmath
+-
+map
+-
+
